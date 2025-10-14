@@ -1,6 +1,0 @@
-using system;
-
-class player
-{
-    
-}
