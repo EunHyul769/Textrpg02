@@ -1,6 +1,9 @@
-using system;
+﻿using TextRPG.Entity;
 
-class player
+namespace TextRPG.Data
 {
-    
+    internal class GameData
+    {
+        public Character Character { get; set; }
+    }
 }
