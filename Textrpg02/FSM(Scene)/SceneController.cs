@@ -1,0 +1,6 @@
+using system;
+
+class player
+{
+    
+}
