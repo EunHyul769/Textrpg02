@@ -1,5 +1,4 @@
-﻿using TextRPG.Monster;
-
+﻿
 namespace TextRPG.Entity
 {
     internal class Monster
