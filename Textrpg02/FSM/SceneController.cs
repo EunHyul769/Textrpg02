@@ -15,11 +15,12 @@ namespace TextRPG.FSM
         public ISceneState DungeonRewardScene { get; private set; }
         public ISceneState DungeonScene { get; private set; }
         public ISceneState DungeonResultScene { get; private set; }
-        public ISceneState BattlePlayerTurnScene { get; private set; }
-        public ISceneState BattleMonsterTurnScene { get; private set; }
+
 
         //배틀 관련 - 임시
-        public ISceneState BattleLevel1_Scene { get; private set; }
+        public ISceneState BattleScene { get; private set; }
+        public ISceneState BattlePlayerTurnScene { get; private set; }
+        public ISceneState BattleMonsterTurnScene { get; private set; }
 
 
         // 캐릭터/인벤토리 관련
@@ -47,7 +48,7 @@ namespace TextRPG.FSM
             DungeonResultScene = new DungeonResultScene(this);
 
             //배틀 관련 - 임시
-            BattleLevel1_Scene = new BattleLevel1_Scene(this);
+            BattleScene = new BattleScene(this);
             BattlePlayerTurnScene = new BattlePlayerTurn_Scene(this);
             BattleMonsterTurnScene = new BattleMonsterTurn_Scene(this);
 
