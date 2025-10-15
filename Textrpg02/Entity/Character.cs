@@ -227,7 +227,7 @@ namespace TextRPG.Entity
             if (!LearnedSkills.Contains(skillId))
             { 
                 LearnedSkills.Add(skillId);
-                Console.WriteLine($"{Name}이(가) {Data.GameData.Skills[skillId].Name} 스킬을 배웠다!");
+                Console.WriteLine($"{Name}이(가) {Data.SkillDB.Skills[skillId].Name} 스킬을 배웠다!");
                 Console.ReadLine();
             }
         }
