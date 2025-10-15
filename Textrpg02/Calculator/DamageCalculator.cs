@@ -13,18 +13,19 @@ namespace TextRPG.Calculator
 
             if (attacker is Character c)
             {
-                int totalAtk = c.Attack + c.BonusAttack;
-                int totalSkillAtk = c.SkillAttack + c.BonusSkillAttack;
-
                 if (skill == null)
                 {
                     // 기본 공격 (크리티컬 가능)
-                    damage = CalculateBasicDamage(totalAtk, GetArmor(defender), c);
+                    damage = CalculateBasicDamage(
+                        c.Attack + c.BonusAttack,
+                        GetArmor(defender),
+                        c
+                    );
                 }
                 else
                 {
-                    // 스킬 공격 (물리/마법 판별)
-                    damage = CalculateSkillDamage(c, defender, skill, totalAtk, totalSkillAtk);
+                    // 스킬 공격 (Skill.CalculateSkillDamage 호출)
+                    damage = CalculateSkillDamage(c, defender, skill);
                 }
             }
             else if (attacker is Monster m)
@@ -32,13 +33,13 @@ namespace TextRPG.Calculator
                 if (skill == null)
                     damage = CalculateBasicDamage(m.Atk, GetArmor(defender), null);
                 else
-                    damage = CalculateSkillDamage(m, defender, skill, m.Atk, 0);
+                    damage = CalculateSkillDamage(m, defender, skill);
             }
 
             return Math.Max(1, (int)Math.Round(damage));
         }
 
-        // ⚔️ 기본 공격 (크리티컬 적용)
+        // ⚔️ 기본 공격 (크리티컬 가능)
         private static double CalculateBasicDamage(int atk, int def, Character? character)
         {
             int baseDamage = Math.Max(1, atk - (def / 2));
@@ -58,23 +59,24 @@ namespace TextRPG.Calculator
             return baseDamage;
         }
 
-        // 🔥 스킬 공격 (Skill.cs 수정 없이, 몬스터 방어 통합)
-        private static double CalculateSkillDamage(object attacker, object defender, Skill skill, int atk, int skillAtk)
+        // 🧙 스킬 공격 — Skill.CalculateSkillDamage() 활용
+        private static double CalculateSkillDamage(object attacker, object defender, Skill skill)
         {
             double baseDamage = 0;
             double defenseValue = 0;
 
-            // (1) 물리/마법 데미지 계산
+            // (1) Skill.cs의 계산 메서드를 그대로 호출
             if (attacker is Character c)
             {
-                baseDamage = (atk * skill.Power) + (skillAtk * skill.SPower);
+                baseDamage = skill.CalculateSkillDamage(c);
             }
             else if (attacker is Monster m)
             {
-                baseDamage = m.Atk * skill.Power;
+                // 몬스터는 단일 공격력 기준으로만 계산
+                baseDamage = m.Atk * (skill.Power + skill.SPower);
             }
 
-            // (2) 스킬 타입 판별 — SPower이 더 크면 마법형
+            // (2) 스킬 타입 판별: SPower가 크면 마법형
             bool isMagical = skill.SPower > skill.Power;
 
             // (3) 방어 계산
@@ -84,11 +86,11 @@ namespace TextRPG.Calculator
                     ? charDef.MagicResistance + charDef.BonusMagicResistance
                     : charDef.Armor + charDef.BonusArmor,
 
-                Monster monDef => monDef.Def, // 몬스터는 단일 Def로 통일
+                Monster monDef => monDef.Def, // 몬스터는 단일 방어
                 _ => 0
             };
 
-            // (4) 최종 데미지
+            // (4) 방어력 반영
             double finalDamage = Math.Max(1, baseDamage - (defenseValue / 2.0));
 
             Console.ForegroundColor = ConsoleColor.Red;
@@ -97,7 +99,7 @@ namespace TextRPG.Calculator
             return finalDamage;
         }
 
-        // 🛡️ 방어력 계산 (기본 공격용)
+        // 방어 계산 공용
         private static int GetArmor(object defender)
         {
             if (defender is Character c)
