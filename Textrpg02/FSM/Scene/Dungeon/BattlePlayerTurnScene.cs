@@ -15,8 +15,8 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         protected override void SetScene()
         {
-            player = BattleContext.Player;
-            monsters = BattleContext.Monsters;
+            player = GameManager.Instance.Character;
+            monsters = GameManager.Instance.MonsterList;
         }
 
         protected override void View()
@@ -152,7 +152,8 @@ namespace TextRPG.FSM.Scene.Dungeon
             {
                 Console.WriteLine("\n전투에서 승리했습니다!");
                 Thread.Sleep(1200);
-                controller.ChangeSceneState(controller.VillageScene);
+                DungeonManager.Instance.dungeonResult = true; //승리 값 전달
+                controller.ChangeSceneState(controller.DungeonResultScene); //결과 씬으로 전환
                 return;
             }
 
@@ -161,6 +162,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         private void Retreat()
         {
+            DungeonManager.Instance.dungeonStage = 0; //던전 스테이지 초기화
             Console.WriteLine("\n전투에서 퇴각합니다...");
             Thread.Sleep(1000);
             controller.ChangeSceneState(controller.VillageScene);

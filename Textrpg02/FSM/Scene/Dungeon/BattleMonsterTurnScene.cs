@@ -15,8 +15,8 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         protected override void SetScene()
         {
-            player = BattleContext.Player;
-            monsters = BattleContext.Monsters;
+            player = GameManager.Instance.Character;
+            monsters = GameManager.Instance.MonsterList;
         }
 
         protected override void View()
@@ -25,7 +25,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             Console.WriteLine("Battle!!\n");
             Console.WriteLine("[몬스터의 턴]\n");
 
-            foreach (var m in monsters)
+            foreach (Monster m in monsters)
             {
                 if (m.Hp <= 0) continue;
 
@@ -43,6 +43,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
                 if (player.Hp <= 0)
                 {
+                    DungeonManager.Instance.dungeonStage = 0; //던전 스테이지 초기화
                     Console.WriteLine("\n플레이어가 쓰러졌습니다...");
                     Thread.Sleep(1000);
                     controller.ChangeSceneState(controller.VillageScene);
