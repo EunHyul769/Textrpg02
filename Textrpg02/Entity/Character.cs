@@ -225,6 +225,57 @@ namespace TextRPG.Entity
             Console.WriteLine($"레벨 업!");
             Console.WriteLine($"레벨이 {Level}로 상승했습니다.");
             Console.WriteLine($"Hp가 회복됩니다.\n");
+
+            if (Level == 3) //3렙 달성시 직업별로 스킬 습득
+            {
+
+                if (Job == JobType.Warrior)
+                {
+                    LearnSkill(10);
+                }
+                else if (Job == JobType.Archer)
+                {
+                    LearnSkill(20);
+                }
+                else if (Job == JobType.Mage)
+                {
+                    LearnSkill(30);
+                }
+            }
+
+            if (Level == 6) //6렙 달성시 직업별로 스킬 습득
+            {
+
+                if (Job == JobType.Warrior)
+                {
+                    LearnSkill(11);
+                }
+                else if (Job == JobType.Archer)
+                {
+                    LearnSkill(21);
+                }
+                else if (Job == JobType.Mage)
+                {
+                    LearnSkill(31);
+                }
+            }
+
+            if (Level == 10) //10렙 달성시 직업별로 스킬 습득
+            {
+
+                if (Job == JobType.Warrior)
+                {
+                    LearnSkill(12);
+                }
+                else if (Job == JobType.Archer)
+                {
+                    LearnSkill(22);
+                }
+                else if (Job == JobType.Mage)
+                {
+                    LearnSkill(32);
+                }
+            }
         }
 
         //스킬 습득
@@ -233,7 +284,7 @@ namespace TextRPG.Entity
             if (!LearnedSkills.Contains(skillId))
             { 
                 LearnedSkills.Add(skillId);
-                Console.WriteLine($"{Name}이(가) {Data.SkillDB.Skills[skillId].Name} 스킬을 배웠다!");
+                Console.WriteLine($"{Name}이(가) {Data.SkillDB.Skills[skillId].Name} 스킬을 익혔습니다!");
                 Console.ReadLine();
             }
         }
