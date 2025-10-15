@@ -31,5 +31,10 @@ namespace TextRPG.Item
             if (RecoverMP > 0) s += $" | 마나 회복 +{RecoverMP}";
             return s;
         }
+
+        public override ItemBase Clone()
+        {
+            return new ConsumeItem(Name, Description, Price, RecoverHP, RecoverMP);
+        }
     }
 }
