@@ -36,6 +36,9 @@ namespace TextRPG.Entity
         // 인벤토리
         public Inventory Inventory { get; private set; }
 
+        //습득한 스킬 ID목록
+        public List<int> LearnedSkills { get; private set; }
+
         public Character(string name, int maxHp, int maxMp, int attack, int skillAttack, int armor, int magicResistance, JobType job)
         {
             Name = name;
@@ -56,6 +59,8 @@ namespace TextRPG.Entity
             Stamina = 100;
 
             Inventory = new Inventory(this);
+
+            LearnedSkills = new List<int>();    //배운 스킬 리스트
         }
 
         public void EquipItem(EquipItem item)
@@ -218,6 +223,17 @@ namespace TextRPG.Entity
             Console.WriteLine($"레벨 업!");
             Console.WriteLine($"레벨이 {Level}로 상승했습니다.");
             Console.WriteLine($"Hp가 회복됩니다.\n");
+        }
+
+        //스킬 습득
+        public void LearnSkill(int skillId)
+        {
+            if (!LearnedSkills.Contains(skillId))
+            { 
+                LearnedSkills.Add(skillId);
+                Console.WriteLine($"{Name}이(가) {Data.GameData.Skills[skillId].Name} 스킬을 배웠다!");
+                Console.ReadLine();
+            }
         }
 
         public string DisplayInfo()
