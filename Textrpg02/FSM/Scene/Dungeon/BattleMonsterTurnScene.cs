@@ -15,8 +15,8 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         protected override void SetScene()
         {
-            player = BattleContext.Player;
-            monsters = BattleContext.Monsters;
+            player = GameManager.Instance.Character;
+            monsters = GameManager.Instance.MonsterList;
         }
 
         protected override void View()
@@ -25,7 +25,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             Console.WriteLine("Battle!!\n");
             Console.WriteLine("[몬스터의 턴]\n");
 
-            foreach (var m in monsters)
+            foreach (Monster m in monsters)
             {
                 if (m.Hp <= 0) continue;
 

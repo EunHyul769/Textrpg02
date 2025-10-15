@@ -15,8 +15,8 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         protected override void SetScene()
         {
-            player = BattleContext.Player;
-            monsters = BattleContext.Monsters;
+            player = GameManager.Instance.Character;
+            monsters = GameManager.Instance.MonsterList;
         }
 
         protected override void View()
