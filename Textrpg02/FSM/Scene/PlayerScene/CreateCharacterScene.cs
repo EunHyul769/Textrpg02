@@ -43,8 +43,6 @@ namespace TextRPG.FSM.Scene.PlayerScene
                     case "1":
                         Character = new Character(name, 100, 20, 10, 3, 10, 10, JobType.Warrior);
                         GameManager.Instance.InitializeCharacter(Character);
-                        shop = new Shop();
-                        GameManager.Instance.InitializeShop(shop);
                         controller.ChangeSceneState(controller.VillageScene);
                         break;
 
@@ -52,8 +50,6 @@ namespace TextRPG.FSM.Scene.PlayerScene
                     case "2":
                         Character = new Character(name, 80, 40, 8, 5, 8, 8, JobType.Archer);
                         GameManager.Instance.InitializeCharacter(Character);
-                        shop = new Shop();
-                        GameManager.Instance.InitializeShop(shop);
                         controller.ChangeSceneState(controller.VillageScene);
                         break;
 
@@ -61,8 +57,6 @@ namespace TextRPG.FSM.Scene.PlayerScene
                     case "3":
                         Character = new Character(name, 60, 60, 6, 10, 6, 6, JobType.Mage);
                         GameManager.Instance.InitializeCharacter(Character);
-                        shop = new Shop();
-                        GameManager.Instance.InitializeShop(shop);
                         controller.ChangeSceneState(controller.VillageScene);
                         break;
 
