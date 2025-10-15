@@ -83,4 +83,5 @@ namespace TextRPG.Calculator
 //캐릭터cs에 CritChance, CritMultiplier 속성 추가
 //스킬cs에 PowerMultiplier, IgnoresDefense 속성 추가
 //ignoresDefense는 방어력 무시 여부
+//일단은 몬스터도 스킬을 쓸 수 있게 설계
 
