@@ -44,16 +44,6 @@ namespace TextRPG.FSM.Scene.Dungeon
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
             Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
             Console.WriteLine();
-            Console.WriteLine("0. 다음");
-            Console.Write("\n>> ");
-
-            while (true)
-            {
-                string input = Console.ReadLine();
-                if (input == "0")
-                    break;
-                Console.Write(">> ");
-            }
 
             controller.ChangeSceneState(controller.BattlePlayerTurnScene);
         }

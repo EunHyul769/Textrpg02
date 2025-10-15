@@ -58,7 +58,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 case "2":
                     Console.WriteLine("\n스킬은 아직 구현되지 않았습니다.");
                     Thread.Sleep(700);
-                    controller.ChangeSceneState(controller.BattleMonsterTurnScene);
+                    controller.ChangeSceneState(controller.BattlePlayerTurnScene);
                     break;
                 case "3":
                     Retreat();
