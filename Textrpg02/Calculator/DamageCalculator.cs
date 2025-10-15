@@ -25,7 +25,7 @@ namespace TextRPG.Calculator
                 else
                 {
                     // 스킬 공격 (Skill.CalculateSkillDamage 호출)
-                    damage = CalculateSkillDamage(c, defender, skill);
+                    damage = SkillDamage(c, defender, skill);
                 }
             }
             else if (attacker is Monster m)
@@ -33,7 +33,7 @@ namespace TextRPG.Calculator
                 if (skill == null)
                     damage = CalculateBasicDamage(m.Atk, GetArmor(defender), null);
                 else
-                    damage = CalculateSkillDamage(m, defender, skill);
+                    damage = SkillDamage(m, defender, skill);
             }
 
             return Math.Max(1, (int)Math.Round(damage));
@@ -60,7 +60,7 @@ namespace TextRPG.Calculator
         }
 
         // 🧙 스킬 공격 — Skill.CalculateSkillDamage() 활용
-        private static double CalculateSkillDamage(object attacker, object defender, Skill skill)
+        private static double SkillDamage(object attacker, object defender, Skill skill)
         {
             double baseDamage = 0;
             double defenseValue = 0;
