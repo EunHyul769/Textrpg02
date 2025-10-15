@@ -6,17 +6,34 @@ namespace TextRPG.FSM.Scene.Village
     internal class ShopScene : SceneBase
     {
         private Character character;
-        private Shop shop;
+        private Shop shop = new Shop();
 
         public ShopScene(SceneController controller) : base(controller)
         {
+            // 무기
+            shop.AddItem(2000);
+            shop.AddItem(2001);
+            shop.AddItem(2002);
+
+            // 방어구
+            shop.AddItem(3000);
+            shop.AddItem(3001);
+            shop.AddItem(3002);
+            shop.AddItem(3003);
+            shop.AddItem(3004);
+            shop.AddItem(3005);
+
+            // 소비 아이템
+            shop.AddItem(1000);
+            shop.AddItem(1001);
+            shop.AddItem(1002);
         }
 
         protected override void SetScene()
         {
             Console.Title = "상점";
             character = GameManager.Instance.Character;
-            shop = GameManager.Instance.Shop;
+            GameManager.Instance.InitializeShop(shop);
         }
 
         protected override void View()
