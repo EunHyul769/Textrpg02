@@ -21,6 +21,8 @@ namespace TextRPG
         public Character Character { get; set; }
         public Shop Shop { get; set; }
         public bool IsGameOver { get; set; }
+        public List<Monster> MonsterList { get; set; } = new List<Monster>();
+        public int CurrentFloors { get; set; } = 1;
 
         public void InitializeCharacter(Character character)
         {
