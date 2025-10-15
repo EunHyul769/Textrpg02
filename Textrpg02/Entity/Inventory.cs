@@ -91,26 +91,28 @@ namespace TextRPG.Entity
 
         public void EquipItem(EquipItem item)
         {
-            // 슬롯에 아이템을 장착 중이면 해제
-            if (EquippedItems[item.EquipSlot] != null)
+            EquipItem currentEquipped = EquippedItems[item.EquipSlot];
+
+            if (currentEquipped != null && currentEquipped.ID == item.ID)
             {
-                EquippedItems[item.EquipSlot].IsEquipped = false;
-                character.UnequipItem(EquippedItems[item.EquipSlot]);
+                currentEquipped.IsEquipped = false;
+                character.UnequipItem(currentEquipped);
+                EquippedItems[item.EquipSlot] = null;
+                Console.WriteLine($"[해제 완료] {item.Name}의 장착을 해제했습니다.");
+                return;
             }
 
-            // 같은 아이템이면 해제
-            if (EquippedItems[item.EquipSlot] == item)
+            if (currentEquipped != null)
             {
-                EquippedItems[item.EquipSlot].IsEquipped = false;
-                EquippedItems[item.EquipSlot] = null;
+                currentEquipped.IsEquipped = false;
+                character.UnequipItem(currentEquipped);
+                Console.WriteLine($"[교체] 기존 {currentEquipped.Name} 해제.");
             }
-            // 다른 아이템이면 변경
-            else
-            {
-                EquippedItems[item.EquipSlot] = item;
-                EquippedItems[item.EquipSlot].IsEquipped = true;
-                character.EquipItem(item);
-            }
+
+            item.IsEquipped = true;
+            EquippedItems[item.EquipSlot] = item;
+            character.EquipItem(item);
+            Console.WriteLine($"[장착 완료] {item.Name}을(를) 장착했습니다.");
         }
 
         public void ConsumeItem(ConsumeItem item)
