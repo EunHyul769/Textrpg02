@@ -14,6 +14,7 @@ namespace TextRPG.Entity
         public int Mp { get; private set; }
         public int Attack { get; private set; }
         public int SkillAttack { get; private set; }
+        public double AttackVariance { get; private set; } = 0.1; // 공격력에 ±10% 편차주기 위함
         public int Armor { get; private set; }
         public int MagicResistance { get; private set; }
         public JobType Job { get; private set; }
@@ -44,6 +45,8 @@ namespace TextRPG.Entity
 
         //습득한 스킬 ID목록
         public List<int> LearnedSkills { get; private set; }
+
+        private static Random rng = new Random();
 
         public Character(string name, int maxHp, int maxMp, int attack, int skillAttack, int armor, int magicResistance, JobType job)
         {
@@ -289,6 +292,19 @@ namespace TextRPG.Entity
             }
         }
 
+        //데미지 계산에 이용되는 실제 공격력(변동)
+        public int GetRandomizedAttack()
+        {
+            double variance = 1 + rng.NextDouble() * (AttackVariance * 2) - AttackVariance;
+            return (int)Math.Round(Attack * variance);
+        }
+        public int GetRandomizedSkillAttack()
+        {
+            double variance = 1 + rng.NextDouble() * (AttackVariance * 2) - AttackVariance;
+            return (int)Math.Round(SkillAttack * variance);
+        }
+        //명시된 공격력의 90%~110% 사이 공격력이 랜덤하게 반환됨
+
         public string DisplayInfo()
         {
             string s = string.Empty;
@@ -314,20 +330,20 @@ namespace TextRPG.Entity
 
         public static Character LoadData(CharacterData data)
         {
-            Character character = new Character(data.Name, data.MaxHp, data.MaxMp, data.Attack, data.SkillAttack, data.Armor, data.MagicResistance, data.Job);
+            Character character = new Character(data.name, data.maxHp, data.maxMp, data.attack, data.skillAttack, data.armor, data.magicResistance, data.job);
 
-            character.Level = data.Level;
-            character.Gold = data.Gold;
-            character.MaxExp = data.MaxExp;
-            character.Exp = data.Exp;
-            character.Stamina = data.Stamina;
+            character.Level = data.level;
+            character.Gold = data.gold;
+            character.MaxExp = data.maxExp;
+            character.Exp = data.exp;
+            character.Stamina = data.stamina;
 
-            character.BonusMaxHp = data.BonusMaxHp;
-            character.BonusMaxMp = data.BonusMaxMp;
-            character.BonusAttack = data.BonusAttack;
-            character.BonusSkillAttack = data.BonusSkillAttack;
-            character.BonusArmor = data.BonusArmor;
-            character.BonusMagicResistance = data.BonusMagicResistance;
+            character.BonusMaxHp = data.bonusMaxHp;
+            character.BonusMaxMp = data.bonusMaxMp;
+            character.BonusAttack = data.bonusAttack;
+            character.BonusSkillAttack = data.bonusSkillAttack;
+            character.BonusArmor = data.bonusArmor;
+            character.BonusMagicResistance = data.bonusMagicResistance;
 
             return character;
         }
