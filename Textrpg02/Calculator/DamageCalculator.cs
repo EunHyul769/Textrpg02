@@ -80,38 +80,65 @@ namespace TextRPG.Calculator
         {
             double baseDamage = 0;
             double defenseValue = 0;
+            double totalDamage = 0; // ← 다단히트 누적용
 
             // (1) Skill.cs 계산기 호출
             if (attacker is Character c)
             {
-                baseDamage = skill.CalculateSkillDamage(c);
+                // skill.CalculateSkillDamage()가 여러 히트라면 IEnumerable<double> 또는 List<double> 반환
+                var damages = skill.CalculateSkillDamage(c);
+
+                // 단일 히트 스킬이면 foreach에서 한 번만 돈다.
+                foreach (var hitDamage in damages)
+                {
+                    baseDamage = hitDamage;
+
+                    // (2) 스킬 타입 판별
+                    bool isMagical = skill.SPower > skill.Power;
+
+                    // (3) 방어 계산
+                    defenseValue = defender switch
+                    {
+                        Character charDef => isMagical
+                            ? charDef.MagicResistance + charDef.BonusMagicResistance
+                            : charDef.Armor + charDef.BonusArmor,
+
+                        Monster monDef => monDef.Def,
+                        _ => 0
+                    };
+
+                    // (4) 방어력 적용
+                    double finalDamage = Math.Max(1, baseDamage - (defenseValue / 2.0));
+                    totalDamage += finalDamage;
+
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"{GetName(attacker)}의 {skill.Name} [{Math.Round(finalDamage)} 데미지!]");
+                    Console.ResetColor();
+                }
             }
             else if (attacker is Monster m)
             {
                 baseDamage = m.Atk * (skill.Power + skill.SPower);
+
+                bool isMagical = skill.SPower > skill.Power;
+                defenseValue = defender switch
+                {
+                    Character charDef => isMagical
+                        ? charDef.MagicResistance + charDef.BonusMagicResistance
+                        : charDef.Armor + charDef.BonusArmor,
+                    Monster monDef => monDef.Def,
+                    _ => 0
+                };
+
+                double finalDamage = Math.Max(1, baseDamage - (defenseValue / 2.0));
+                totalDamage += finalDamage;
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"{GetName(attacker)}이(가) {skill.Name}을(를) 사용했다! [{Math.Round(finalDamage)} 데미지]");
+                Console.ResetColor();
             }
 
-            // (2) 스킬 타입 판별
-            bool isMagical = skill.SPower > skill.Power;
-
-            // (3) 방어 계산
-            defenseValue = defender switch
-            {
-                Character charDef => isMagical
-                    ? charDef.MagicResistance + charDef.BonusMagicResistance
-                    : charDef.Armor + charDef.BonusArmor,
-
-                Monster monDef => monDef.Def,
-                _ => 0
-            };
-
-            // (4) 방어력 적용
-            double finalDamage = Math.Max(1, baseDamage - (defenseValue / 2.0));
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"{GetName(attacker)}이(가) {skill.Name}을(를) 사용했다!");
-            Console.ResetColor();
-            return finalDamage;
+            return totalDamage; // ← 다단히트면 총합 반환, 단일히트면 기존과 동일
         }
 
         private static int GetArmor(object defender)
