@@ -5,9 +5,9 @@ using TextRPG.Data;
 
 namespace TextRPG.FSM.Scene.Dungeon
 {
-    internal class BattleLevel1_Scene : SceneBase
+    internal class BattleScene : SceneBase
     {
-        public BattleLevel1_Scene(SceneController controller) : base(controller) { }
+        public BattleScene(SceneController controller) : base(controller) { }
 
         protected override void SetScene()
         {
