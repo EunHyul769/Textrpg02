@@ -116,14 +116,14 @@ namespace TextRPG.Entity
             return Hp;
         }
 
-        public bool TakeHp(int hp)
+        public int TakeHp(int hp)
         {
-            if (Hp >= hp)
+            Hp -= hp;
+            if (Hp <= 0)
             {
-                Hp -= hp;
-                return true;
+                Hp = 0;
             }
-            return false;
+            return Hp;
         }
 
         public int AddMp(int mp)
