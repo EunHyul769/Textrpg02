@@ -8,6 +8,13 @@ namespace TextRPG.Manager
     {
         private const string SAVE_FILE_NAME = "savegame.json";
 
+        public GameData GameData { get; private set; }
+
+        public DataManager()
+        {
+            GameData = new GameData();
+        }
+
         private static DataManager instance;
         public static DataManager Instance
         {
