@@ -36,6 +36,9 @@ namespace TextRPG.Entity
         // 인벤토리
         public Inventory Inventory { get; private set; }
 
+        //습득한 스킬 ID목록
+        public List<int> LearnedSkills { get; private set; }
+
         public Character(string name, int maxHp, int maxMp, int attack, int skillAttack, int armor, int magicResistance, JobType job)
         {
             Name = name;
@@ -56,12 +59,12 @@ namespace TextRPG.Entity
             Stamina = 100;
 
             Inventory = new Inventory(this);
+
+            LearnedSkills = new List<int>();    //배운 스킬 리스트
         }
 
         public void EquipItem(EquipItem item)
         {
-            item.IsEquipped = true;
-
             BonusMaxHp += item.BonusMaxHp;
             BonusMaxMp += item.BonusMaxMp;
             BonusAttack += item.BonusAttack;
@@ -81,8 +84,6 @@ namespace TextRPG.Entity
 
         public void UnequipItem(EquipItem item)
         {
-            item.IsEquipped = false;
-
             BonusMaxHp -= item.BonusMaxHp;
             BonusMaxMp -= item.BonusMaxMp;
             BonusAttack -= item.BonusAttack;
@@ -220,6 +221,17 @@ namespace TextRPG.Entity
             Console.WriteLine($"Hp가 회복됩니다.\n");
         }
 
+        //스킬 습득
+        public void LearnSkill(int skillId)
+        {
+            if (!LearnedSkills.Contains(skillId))
+            { 
+                LearnedSkills.Add(skillId);
+                Console.WriteLine($"{Name}이(가) {Data.GameData.Skills[skillId].Name} 스킬을 배웠다!");
+                Console.ReadLine();
+            }
+        }
+
         public string DisplayInfo()
         {
             string s = string.Empty;
@@ -236,6 +248,11 @@ namespace TextRPG.Entity
             s += $"Exp: {Exp} / {MaxExp}\n";
             s += $"스테미나: {Stamina}\n";
             return s;
+        }
+
+        public void SetInventory(Inventory inventory)
+        {
+            Inventory = inventory;
         }
 
         public static Character LoadData(CharacterData data)
@@ -255,10 +272,6 @@ namespace TextRPG.Entity
             character.BonusArmor = data.BonusArmor;
             character.BonusMagicResistance = data.BonusMagicResistance;
 
-            character.Inventory.Items = data.Items;
-            character.Inventory.EquipItemCount = data.EquipItemCount;
-            character.Inventory.ConsumeItemCount = data.ConsumeItemCount;
-            character.Inventory.EquippedItems = data.EquippedItems;
             return character;
         }
     }

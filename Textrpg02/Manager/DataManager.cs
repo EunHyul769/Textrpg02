@@ -23,36 +23,42 @@ namespace TextRPG.Manager
 
         public void SaveGame(Character character, Inventory inventory)
         {
-            var saveData = new CharacterData
+            var saveData = new GameSaveData
             {
-                Name = character.Name,
-                MaxHp = character.MaxHp,
-                Hp = character.Hp,
-                MaxMp = character.MaxMp,
-                Mp = character.Mp,
-                Attack = character.Attack,
-                SkillAttack = character.SkillAttack,
-                Armor = character.Armor,
-                MagicResistance = character.MagicResistance,
-                Job = character.Job,
+                CharacterData = new CharacterData
+                {
+                    Name = character.Name,
+                    MaxHp = character.MaxHp,
+                    Hp = character.Hp,
+                    MaxMp = character.MaxMp,
+                    Mp = character.Mp,
+                    Attack = character.Attack,
+                    SkillAttack = character.SkillAttack,
+                    Armor = character.Armor,
+                    MagicResistance = character.MagicResistance,
+                    Job = character.Job,
 
-                Level = character.Level,
-                Gold = character.Gold,
-                MaxExp = character.MaxExp,
-                Exp = character.Exp,
-                Stamina = character.Stamina,
+                    Level = character.Level,
+                    Gold = character.Gold,
+                    MaxExp = character.MaxExp,
+                    Exp = character.Exp,
+                    Stamina = character.Stamina,
 
-                BonusMaxHp = character.BonusMaxHp,
-                BonusMaxMp = character.BonusMaxMp,
-                BonusAttack = character.BonusAttack,
-                BonusSkillAttack = character.BonusSkillAttack,
-                BonusArmor = character.BonusArmor,
-                BonusMagicResistance = character.BonusMagicResistance,
+                    BonusMaxHp = character.BonusMaxHp,
+                    BonusMaxMp = character.BonusMaxMp,
+                    BonusAttack = character.BonusAttack,
+                    BonusSkillAttack = character.BonusSkillAttack,
+                    BonusArmor = character.BonusArmor,
+                    BonusMagicResistance = character.BonusMagicResistance,
+                },
 
-                Items = inventory.Items,
-                EquipItemCount = inventory.EquipItemCount,
-                ConsumeItemCount = inventory.ConsumeItemCount,
-                EquippedItems = inventory.EquippedItems,
+                InventoryData = new InventoryData
+                {
+                    Items = inventory.Items,
+                    EquipItemCount = inventory.EquipItemCount,
+                    ConsumeItemCount = inventory.ConsumeItemCount,
+                    EquippedItems = inventory.EquippedItems,
+                },
             };
 
             try
@@ -62,7 +68,7 @@ namespace TextRPG.Manager
                     new JsonSerializerSettings
                     {
                         Formatting = Formatting.Indented,
-                        TypeNameHandling = TypeNameHandling.Objects 
+                        TypeNameHandling = TypeNameHandling.Objects
                     });
                 File.WriteAllText(SAVE_FILE_NAME, jsonString);
                 Console.WriteLine("\n[시스템] 게임 상태가 성공적으로 저장되었습니다.");
@@ -87,7 +93,7 @@ namespace TextRPG.Manager
             try
             {
                 string jsonString = File.ReadAllText(SAVE_FILE_NAME);
-                var loadedData = JsonConvert.DeserializeObject<CharacterData>(
+                var loadedData = JsonConvert.DeserializeObject<GameSaveData>(
                     jsonString,
                     new JsonSerializerSettings
                     {
@@ -96,8 +102,10 @@ namespace TextRPG.Manager
 
                 if (loadedData == null) return false;
 
-                character = Character.LoadData(loadedData);
-                inventory = character.Inventory;
+                character = Character.LoadData(loadedData.CharacterData);
+                inventory = Inventory.LoadData(loadedData.InventoryData);
+                character.SetInventory(inventory);
+                inventory.SetCharacter(character);
 
                 Console.WriteLine("[불러오기 완료] 게임 상태를 복원했습니다.");
                 return true;

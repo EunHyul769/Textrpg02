@@ -1,5 +1,4 @@
 ﻿using TextRPG.Enum;
-using TextRPG.Item;
 
 namespace TextRPG.Data
 {
@@ -31,13 +30,5 @@ namespace TextRPG.Data
         public int BonusSkillAttack { get; set; }
         public int BonusArmor { get; set; }
         public int BonusMagicResistance { get; set; }
-
-        // 인벤토리
-        public List<ItemBase> Items { get; set; }
-        public int EquipItemCount { get; set; }
-        public int ConsumeItemCount { get; set; }
-
-        // 장비 슬롯
-        public Dictionary<EquipSlot, EquipItem> EquippedItems { get; set; }
     }
 }

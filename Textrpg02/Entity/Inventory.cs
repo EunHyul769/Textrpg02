@@ -1,19 +1,28 @@
-﻿using TextRPG.Enum;
+﻿using TextRPG.Data;
+using TextRPG.Enum;
 using TextRPG.Item;
 
 namespace TextRPG.Entity
 {
     internal class Inventory
     {
-        public List<ItemBase> Items { get; set; } = new List<ItemBase>();
+        public List<ItemBase> Items { get; private set; } = new List<ItemBase>();
 
-        public int EquipItemCount { get; set; }
-        public int ConsumeItemCount { get; set; }
+        public int EquipItemCount { get; private set; }
+        public int ConsumeItemCount { get; private set; }
 
         // 장비 슬롯
-        public Dictionary<EquipSlot, EquipItem> EquippedItems = new Dictionary<EquipSlot, EquipItem>();
+        public Dictionary<EquipSlot, EquipItem> EquippedItems { get; private set; } = new Dictionary<EquipSlot, EquipItem>();
 
-        private readonly Character character;
+        private Character character;
+
+        public Inventory()
+        {
+            foreach (EquipSlot slot in System.Enum.GetValues(typeof(EquipSlot)))
+            {
+                EquippedItems.Add(slot, null);
+            }
+        }
 
         public Inventory(Character character)
         {
@@ -61,9 +70,10 @@ namespace TextRPG.Entity
         // 아이템 판매
         public void SellItem(ItemBase item)
         {
-            if (item is EquipItem equipItem && equipItem.IsEquipped)
+            if (item is EquipItem equipItem)
             {
-                EquipItem(equipItem);
+                if (equipItem.IsEquipped)
+                    EquipItem(equipItem);
                 equipItem.IsBuy = false;
             }
             RemoveItem(item);
@@ -82,21 +92,23 @@ namespace TextRPG.Entity
         public void EquipItem(EquipItem item)
         {
             // 슬롯에 아이템을 장착 중이면 해제
-            if (EquippedItems[item.equipSlot] != null)
+            if (EquippedItems[item.EquipSlot] != null)
             {
-                EquipItem equipedItem = EquippedItems[item.equipSlot];
-                character.UnequipItem(equipedItem);
+                EquippedItems[item.EquipSlot].IsEquipped = false;
+                character.UnequipItem(EquippedItems[item.EquipSlot]);
             }
 
             // 같은 아이템이면 해제
-            if (EquippedItems[item.equipSlot] == item)
+            if (EquippedItems[item.EquipSlot] == item)
             {
-                EquippedItems[item.equipSlot] = null;
+                EquippedItems[item.EquipSlot].IsEquipped = false;
+                EquippedItems[item.EquipSlot] = null;
             }
             // 다른 아이템이면 변경
             else
             {
-                EquippedItems[item.equipSlot] = item;
+                EquippedItems[item.EquipSlot] = item;
+                EquippedItems[item.EquipSlot].IsEquipped = true;
                 character.EquipItem(item);
             }
         }
@@ -105,6 +117,22 @@ namespace TextRPG.Entity
         {
             item.Use(character);
             RemoveItem(item);
+        }
+
+        public void SetCharacter(Character character)
+        {
+            this.character = character;
+        }
+
+        public static Inventory LoadData(InventoryData inventoryData)
+        {
+            Inventory inventory = new Inventory();
+            inventory.Items = inventoryData.Items;
+            inventory.EquipItemCount = inventoryData.EquipItemCount;
+            inventory.ConsumeItemCount = inventoryData.ConsumeItemCount;
+            inventory.EquippedItems = inventoryData.EquippedItems;
+
+            return inventory;
         }
     }
 }
