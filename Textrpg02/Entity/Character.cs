@@ -305,6 +305,7 @@ namespace TextRPG.Entity
         }
         //명시된 공격력의 90%~110% 사이 공격력이 랜덤하게 반환됨
 
+
         public string DisplayInfo()
         {
             string s = string.Empty;
@@ -344,6 +345,10 @@ namespace TextRPG.Entity
             character.BonusSkillAttack = data.bonusSkillAttack;
             character.BonusArmor = data.bonusArmor;
             character.BonusMagicResistance = data.bonusMagicResistance;
+
+            //배운 스킬 있으면 스킬도 불러오기
+            if (data.learnedSkills != null)
+                character.LearnedSkills = new List<int>(data.learnedSkills);
 
             return character;
         }

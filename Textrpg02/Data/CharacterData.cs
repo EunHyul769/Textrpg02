@@ -30,5 +30,7 @@ namespace TextRPG.Data
         public int bonusSkillAttack;
         public int bonusArmor;
         public int bonusMagicResistance;
+
+        public List<int> learnedSkills = new List<int>();
     }
 }
