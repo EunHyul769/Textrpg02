@@ -68,7 +68,7 @@
                     Sleep();
                     Console.WriteLine("...터벅...");
                     Sleep();
-                    controller.ChangeSceneState(controller.BattlePlayerTurnScene); //전투 씬 진입
+                    controller.ChangeSceneState(controller.BattleScene); //전투 씬 진입
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
