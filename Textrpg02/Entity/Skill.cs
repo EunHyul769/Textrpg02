@@ -34,19 +34,6 @@ namespace TextRPG.Entity
         // 나중엔 방어력 계수나 체력 계수, 스피드 계수 등도 추가가능
 
 
-        // 계산기 쪽에서 이런식으로 불러오면됨  
-        // double baseDamage;
-
-        //         if (useSkill && skill != null)
-        //         {
-        //             baseDamage = skill.CalculateSkillDamage(character); // 스킬 계산식
-        //         }
-        //         else
-        //         {
-        //             baseDamage = player.TotalAtk; // 일반 공격
-        //         }
-
-
         
 
     }
