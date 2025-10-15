@@ -5,30 +5,30 @@ namespace TextRPG.Data
     internal class CharacterData
     {
         // 생성자 주입
-        public string Name { get; set; }
-        public int MaxHp { get; set; }
-        public int Hp { get; set; }
-        public int MaxMp { get; set; }
-        public int Mp { get; set; }
-        public int Attack { get; set; }
-        public int SkillAttack { get; set; }
-        public int Armor { get; set; }
-        public int MagicResistance { get; set; }
-        public JobType Job { get; set; }
+        public string name;
+        public int maxHp;
+        public int hp;
+        public int maxMp;
+        public int mp;
+        public int attack;
+        public int skillAttack;
+        public int armor;
+        public int magicResistance;
+        public JobType job;
 
         // 초기 세팅값
-        public int Level { get; set; }
-        public int Gold { get; set; }
-        public int MaxExp { get; set; }
-        public int Exp { get; set; }
-        public int Stamina { get; set; }
+        public int level;
+        public int gold;
+        public int maxExp;
+        public int exp;
+        public int stamina;
 
         // 아이템으로 얻은 추가 능력치
-        public int BonusMaxHp { get; set; }
-        public int BonusMaxMp { get; set; }
-        public int BonusAttack { get; set; }
-        public int BonusSkillAttack { get; set; }
-        public int BonusArmor { get; set; }
-        public int BonusMagicResistance { get; set; }
+        public int bonusMaxHp;
+        public int bonusMaxMp;
+        public int bonusAttack;
+        public int bonusSkillAttack;
+        public int bonusArmor;
+        public int bonusMagicResistance;
     }
 }

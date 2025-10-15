@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using TextRPG.Data;
 using TextRPG.Entity;
+using TextRPG.Enum;
+using TextRPG.Item;
 
 namespace TextRPG.Manager
 {
@@ -30,41 +32,47 @@ namespace TextRPG.Manager
 
         public void SaveGame(Character character, Inventory inventory)
         {
+            var equippedDataForSave = new DictionaryConvertData
+            {
+                keys = inventory.EquippedItems.Keys.ToList(),
+                values = inventory.EquippedItems.Values.ToList()
+            };
+
             var saveData = new GameSaveData
             {
                 CharacterData = new CharacterData
                 {
-                    Name = character.Name,
-                    MaxHp = character.MaxHp,
-                    Hp = character.Hp,
-                    MaxMp = character.MaxMp,
-                    Mp = character.Mp,
-                    Attack = character.Attack,
-                    SkillAttack = character.SkillAttack,
-                    Armor = character.Armor,
-                    MagicResistance = character.MagicResistance,
-                    Job = character.Job,
+                    name = character.Name,
+                    maxHp = character.MaxHp,
+                    hp = character.Hp,
+                    maxMp = character.MaxMp,
+                    mp = character.Mp,
+                    attack = character.Attack,
+                    skillAttack = character.SkillAttack,
+                    armor = character.Armor,
+                    magicResistance = character.MagicResistance,
+                    job = character.Job,
 
-                    Level = character.Level,
-                    Gold = character.Gold,
-                    MaxExp = character.MaxExp,
-                    Exp = character.Exp,
-                    Stamina = character.Stamina,
+                    level = character.Level,
+                    gold = character.Gold,
+                    maxExp = character.MaxExp,
+                    exp = character.Exp,
+                    stamina = character.Stamina,
 
-                    BonusMaxHp = character.BonusMaxHp,
-                    BonusMaxMp = character.BonusMaxMp,
-                    BonusAttack = character.BonusAttack,
-                    BonusSkillAttack = character.BonusSkillAttack,
-                    BonusArmor = character.BonusArmor,
-                    BonusMagicResistance = character.BonusMagicResistance,
+                    bonusMaxHp = character.BonusMaxHp,
+                    bonusMaxMp = character.BonusMaxMp,
+                    bonusAttack = character.BonusAttack,
+                    bonusSkillAttack = character.BonusSkillAttack,
+                    bonusArmor = character.BonusArmor,
+                    bonusMagicResistance = character.BonusMagicResistance,
                 },
 
                 InventoryData = new InventoryData
                 {
-                    Items = inventory.Items,
-                    EquipItemCount = inventory.EquipItemCount,
-                    ConsumeItemCount = inventory.ConsumeItemCount,
-                    EquippedItems = inventory.EquippedItems,
+                    items = inventory.Items,
+                    equipItemCount = inventory.EquipItemCount,
+                    consumeItemCount = inventory.ConsumeItemCount,
+                    equippedItems = equippedDataForSave,
                 },
             };
 
@@ -86,6 +94,20 @@ namespace TextRPG.Manager
             }
         }
 
+        private Dictionary<EquipSlot, EquipItem> ReassembleEquippedItems(InventoryData inventoryData)
+        {
+            if (inventoryData.equippedItems == null || inventoryData.equippedItems.keys == null)
+            {
+                // 데이터가 저장되지 않았거나 손상된 경우, 빈 딕셔너리 반환
+                return new Dictionary<EquipSlot, EquipItem>();
+            }
+
+            // 딕셔너리의 키(EquipSlot)와 값(EquipItem) 리스트를 Zip하여 다시 Dictionary로 만듭니다.
+            return inventoryData.equippedItems.keys
+                .Zip(inventoryData.equippedItems.values, (key, value) => new { Key = key, Value = value })
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
+
         public bool LoadGame(out Character character, out Inventory inventory)
         {
             character = null;
@@ -104,13 +126,17 @@ namespace TextRPG.Manager
                     jsonString,
                     new JsonSerializerSettings
                     {
+                        Formatting = Formatting.Indented,
                         TypeNameHandling = TypeNameHandling.Objects
                     });
 
                 if (loadedData == null) return false;
 
+                Dictionary<EquipSlot, EquipItem> restoredEquipped = ReassembleEquippedItems(loadedData.InventoryData);
+
                 character = Character.LoadData(loadedData.CharacterData);
-                inventory = Inventory.LoadData(loadedData.InventoryData);
+                inventory = Inventory.LoadData(loadedData.InventoryData, restoredEquipped);
+
                 character.SetInventory(inventory);
                 inventory.SetCharacter(character);
 
