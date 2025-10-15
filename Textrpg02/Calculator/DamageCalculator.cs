@@ -1,5 +1,5 @@
-﻿
-using TextRPG.Entity; // Player, Monster 클래스를 사용하기 위함
+﻿using TextRPG;
+using TextRPG.Entity; // Player, Monster 클래스를 사용하기 위함 물론, 스킬도
 
 namespace TextRPG.Calculator
 {
@@ -7,81 +7,115 @@ namespace TextRPG.Calculator
     {
         private static Random rng = new Random();
 
-        // 공통 계산: 공격자(플레이어나 몬스터), 수비자, 스킬(있을 수도 있음)
         public static int CalculateAttack(object attacker, object defender, Skill? skill = null)
         {
-            int attackerAtk;
-            int defenderDef;
-            double critChance = 0.0;
-            double critMultiplier = 1.0;
-            bool fromSkill = skill != null;
-            double power = 1.0;
-            bool ignoreDef = false;
+            double damage = 0.0;
 
-            // 공격자 타입 판별
-            if (attacker is Character character)
+            if (attacker is Character c)
             {
-                attackerAtk = character.Attack;
-                critChance = character.CritChance;
-                critMultiplier = character.CritMultiplier;
-                if (skill != null)
+                int totalAtk = c.Attack + c.BonusAttack;
+                int totalSkillAtk = c.SkillAttack + c.BonusSkillAttack;
+
+                if (skill == null)
                 {
-                    power = skill.PowerMultiplier;
-                    ignoreDef = skill.IgnoresDefense;
-                    critChance = 0.0; // 스킬에는 크리티컬 적용 안 함
+                    // 기본 공격 (크리티컬 가능)
+                    damage = CalculateBasicDamage(totalAtk, GetArmor(defender), c);
+                }
+                else
+                {
+                    // 스킬 공격 (물리/마법 판별)
+                    damage = CalculateSkillDamage(c, defender, skill, totalAtk, totalSkillAtk);
                 }
             }
-            else if (attacker is Monster monster)
+            else if (attacker is Monster m)
             {
-                attackerAtk = monster.Atk;
-                if (skill != null)
-                {
-                    power = skill.PowerMultiplier;
-                    ignoreDef = skill.IgnoresDefense;
-                }
-            }
-            else
-            {
-                throw new ArgumentException("공격자는 Character 또는 Monster여야 합니다.");
+                if (skill == null)
+                    damage = CalculateBasicDamage(m.Atk, GetArmor(defender), null);
+                else
+                    damage = CalculateSkillDamage(m, defender, skill, m.Atk, 0);
             }
 
-            // 수비자 방어력
-            if (defender is Character defChar)
-                defenderDef = defChar.Armor;
-            else if (defender is Monster defMon)
-                defenderDef = defMon.Def;
-            else
-                throw new ArgumentException("수비자는 Character 또는 Monster여야 합니다.");
-
-            return CalculateDamage(attackerAtk, defenderDef, critChance, critMultiplier, power, ignoreDef, fromSkill);
+            return Math.Max(1, (int)Math.Round(damage));
         }
 
-        private static int CalculateDamage(
-            int attackerAtk,
-            int defenderDef,
-            double critChance,
-            double critMultiplier,
-            double powerMultiplier,
-            bool ignoreDef,
-            bool fromSkill)
+        // ⚔️ 기본 공격 (크리티컬 적용)
+        private static double CalculateBasicDamage(int atk, int def, Character? character)
         {
-            int defense = ignoreDef ? 0 : defenderDef / 2;
-            int baseDamage = Math.Max(1, attackerAtk - defense);
-            baseDamage = (int)(baseDamage * powerMultiplier);
+            int baseDamage = Math.Max(1, atk - (def / 2));
 
-            bool isCrit = !fromSkill && rng.NextDouble() < critChance;
-            if (isCrit)
+            if (character != null)
             {
-                baseDamage = (int)Math.Round(baseDamage * critMultiplier);
-                Console.WriteLine("★ 크리티컬 히트! ★");
+                bool isCrit = rng.NextDouble() < character.CritChance;
+                if (isCrit)
+                {
+                    baseDamage = (int)Math.Round(baseDamage * character.CritMultiplier);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("★ 크리티컬 히트! ★");
+                    Console.ResetColor();
+                }
             }
 
             return baseDamage;
         }
+
+        // 🔥 스킬 공격 (Skill.cs 수정 없이, 몬스터 방어 통합)
+        private static double CalculateSkillDamage(object attacker, object defender, Skill skill, int atk, int skillAtk)
+        {
+            double baseDamage = 0;
+            double defenseValue = 0;
+
+            // (1) 물리/마법 데미지 계산
+            if (attacker is Character c)
+            {
+                baseDamage = (atk * skill.Power) + (skillAtk * skill.SPower);
+            }
+            else if (attacker is Monster m)
+            {
+                baseDamage = m.Atk * skill.Power;
+            }
+
+            // (2) 스킬 타입 판별 — SPower이 더 크면 마법형
+            bool isMagical = skill.SPower > skill.Power;
+
+            // (3) 방어 계산
+            defenseValue = defender switch
+            {
+                Character charDef => isMagical
+                    ? charDef.MagicResistance + charDef.BonusMagicResistance
+                    : charDef.Armor + charDef.BonusArmor,
+
+                Monster monDef => monDef.Def, // 몬스터는 단일 Def로 통일
+                _ => 0
+            };
+
+            // (4) 최종 데미지
+            double finalDamage = Math.Max(1, baseDamage - (defenseValue / 2.0));
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"{GetName(attacker)}이(가) {skill.Name}을(를) 사용했다!");
+            Console.ResetColor();
+            return finalDamage;
+        }
+
+        // 🛡️ 방어력 계산 (기본 공격용)
+        private static int GetArmor(object defender)
+        {
+            if (defender is Character c)
+                return c.Armor + c.BonusArmor;
+            if (defender is Monster m)
+                return m.Def;
+            return 0;
+        }
+
+        private static string GetName(object entity)
+        {
+            if (entity is Character c) return c.Name;
+            if (entity is Monster m) return m.Name;
+            return "알 수 없는 존재";
+        }
     }
 }
 //캐릭터cs에 CritChance, CritMultiplier 속성 추가
-//스킬cs에 PowerMultiplier, IgnoresDefense 속성 추가
-//ignoresDefense는 방어력 무시 여부
+
 //일단은 몬스터도 스킬을 쓸 수 있게 설계
 
