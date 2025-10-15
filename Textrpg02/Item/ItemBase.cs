@@ -7,12 +7,14 @@ namespace TextRPG.Item
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int Price { get; private set; }
+        public Guid ID;
 
         public ItemBase(string name, string description, int price)
         {
             Name = name;
             Description = description;
             Price = price;
+            ID = Guid.NewGuid();
         }
 
         public abstract string DisplayInfo();
