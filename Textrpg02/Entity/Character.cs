@@ -22,7 +22,7 @@ namespace TextRPG.Entity
 
         public double CritMultiplier { get; private set; } = 1.5;   //크뎀 비율 150퍼 고정
 
-        public double AboidChance { get; private set; } = 0.05;     //회피 확률 5퍼 고정
+        //public double AboidChance { get; private set; } = 0.05;     //회피 확률 5퍼 고정 임시해제. 나중에 이용.
 
         // 초기 세팅값
         public int Level { get; private set; }
