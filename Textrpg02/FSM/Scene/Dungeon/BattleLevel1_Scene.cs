@@ -1,51 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TextRPG.Entity;
+using TextRPG.Data;
 
 namespace TextRPG.FSM.Scene.Dungeon
 {
     internal class BattleLevel1_Scene : SceneBase
     {
-        public BattleLevel1_Scene(SceneController controller) : base(controller)
-        {
-        }
+        public BattleLevel1_Scene(SceneController controller) : base(controller) { }
 
         protected override void SetScene()
         {
-            Console.Title = "";
-        }
+            Console.Title = "Battle!!";
 
-        protected override void View()
-        {
-            Console.WriteLine("[던전 입장]\n");
+            var player = GameManager.Instance.Character;
 
-            Console.WriteLine("1. 승리");
-            Console.WriteLine("0. 패배\n");
-        }
-
-        protected override void Control()
-        {
-            Console.Write("원하시는 행동을 입력해주세요. ");
-            string input = Console.ReadLine();
-
-            switch (input)
+            var monsters = new List<Monster>();
+            int count = Random.Next(1, 5); 
+            for (int i = 0; i < count; i++)
             {
-                case "0":
-                    DungeonLevel1_Scene.battleResult = false; //전투 결과 전달 (패배)
-                    controller.ChangeSceneState(controller.DungeonLevel1_Scene);
-                    break;
-                case "1":
-                    DungeonLevel1_Scene.battleResult = true; //전투 결과 전달 (승리)
-                    controller.ChangeSceneState(controller.DungeonLevel1_Scene);
-                    break;
-                default:
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Sleep();
-                    break;
+                int randId = Random.Next(1, MonsterDB.Monsters.Count + 1);
+                monsters.Add(MonsterDB.Monsters[randId].Clone());
             }
+
+            BattleContext.Player = player;
+            BattleContext.Monsters = monsters;
+
+            controller.ChangeSceneState(controller.BattlePlayerTurnScene);
         }
 
+        protected override void View() 
+        { 
+        
+        }
+        protected override void Control() 
+        { 
+        
+        }
     }
 }

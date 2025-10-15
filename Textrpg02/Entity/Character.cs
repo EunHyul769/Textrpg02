@@ -330,20 +330,20 @@ namespace TextRPG.Entity
 
         public static Character LoadData(CharacterData data)
         {
-            Character character = new Character(data.Name, data.MaxHp, data.MaxMp, data.Attack, data.SkillAttack, data.Armor, data.MagicResistance, data.Job);
+            Character character = new Character(data.name, data.maxHp, data.maxMp, data.attack, data.skillAttack, data.armor, data.magicResistance, data.job);
 
-            character.Level = data.Level;
-            character.Gold = data.Gold;
-            character.MaxExp = data.MaxExp;
-            character.Exp = data.Exp;
-            character.Stamina = data.Stamina;
+            character.Level = data.level;
+            character.Gold = data.gold;
+            character.MaxExp = data.maxExp;
+            character.Exp = data.exp;
+            character.Stamina = data.stamina;
 
-            character.BonusMaxHp = data.BonusMaxHp;
-            character.BonusMaxMp = data.BonusMaxMp;
-            character.BonusAttack = data.BonusAttack;
-            character.BonusSkillAttack = data.BonusSkillAttack;
-            character.BonusArmor = data.BonusArmor;
-            character.BonusMagicResistance = data.BonusMagicResistance;
+            character.BonusMaxHp = data.bonusMaxHp;
+            character.BonusMaxMp = data.bonusMaxMp;
+            character.BonusAttack = data.bonusAttack;
+            character.BonusSkillAttack = data.bonusSkillAttack;
+            character.BonusArmor = data.bonusArmor;
+            character.BonusMagicResistance = data.bonusMagicResistance;
 
             return character;
         }

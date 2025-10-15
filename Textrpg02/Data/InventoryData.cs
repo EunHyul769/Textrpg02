@@ -5,12 +5,12 @@ namespace TextRPG.Data
 {
     internal class InventoryData
     {
-        public List<ItemBase> Items { get; set; }
+        public List<ItemBase> items;
 
-        public int EquipItemCount { get; set; }
-        public int ConsumeItemCount { get; set; }
+        public int equipItemCount;
+        public int consumeItemCount;
 
         // 장비 슬롯
-        public Dictionary<EquipSlot, EquipItem> EquippedItems;
+        public DictionaryConvertData equippedItems;
     }
 }

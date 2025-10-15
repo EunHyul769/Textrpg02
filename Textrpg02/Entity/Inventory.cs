@@ -124,13 +124,13 @@ namespace TextRPG.Entity
             this.character = character;
         }
 
-        public static Inventory LoadData(InventoryData inventoryData)
+        public static Inventory LoadData(InventoryData inventoryData, Dictionary<EquipSlot, EquipItem> restoredEquipped)
         {
             Inventory inventory = new Inventory();
-            inventory.Items = inventoryData.Items;
-            inventory.EquipItemCount = inventoryData.EquipItemCount;
-            inventory.ConsumeItemCount = inventoryData.ConsumeItemCount;
-            inventory.EquippedItems = inventoryData.EquippedItems;
+            inventory.Items = inventoryData.items;
+            inventory.EquipItemCount = inventoryData.equipItemCount;
+            inventory.ConsumeItemCount = inventoryData.consumeItemCount;
+            inventory.EquippedItems = restoredEquipped;
 
             return inventory;
         }
