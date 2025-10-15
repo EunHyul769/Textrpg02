@@ -6,7 +6,7 @@ namespace TextRPG.Item
     {
         public ItemType Type { get; private set; }
         public JobType PermitJob { get; private set; }
-        public EquipSlot equipSlot { get; private set; }
+        public EquipSlot EquipSlot { get; private set; }
 
         // 능력치 보너스 필드
         public int BonusMaxHp { get; private set; }
@@ -27,7 +27,7 @@ namespace TextRPG.Item
             {
                 Type = type;
                 PermitJob = permitJob;
-                equipSlot = slot;
+                EquipSlot = slot;
 
                 BonusMaxHp = bonusMaxHp;
                 BonusMaxMp = bonusMaxMp;
@@ -40,7 +40,6 @@ namespace TextRPG.Item
             {
                 Console.WriteLine("장비 아이템은 타입에 장비만 넣을 수 있습니다.");
             }
-            
         }
 
         public bool CanEquip(JobType characterJob)
@@ -55,7 +54,7 @@ namespace TextRPG.Item
 
         public string StatInfo()
         {
-            string s = string.Empty ;
+            string s = string.Empty;
             if (BonusMaxHp > 0) s += $" | 체력 +{BonusMaxHp}";
             if (BonusMaxMp > 0) s += $" | 마나 +{BonusMaxMp}";
             if (BonusAttack > 0) s += $" | 공격력 +{BonusAttack}";
