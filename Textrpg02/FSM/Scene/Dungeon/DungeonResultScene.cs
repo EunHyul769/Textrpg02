@@ -61,7 +61,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 if (floorNum == lastDungeon) //마지막 던전이면 발동
                 {
                     GameManager.Instance.CurrentFloors = 0; //층수 초기화
-                    Console.Write("아무 거나 입력하면 넘어갑니다.");
+                    Console.Write("아무거나 입력하면 넘어갑니다.");
                     string input_ = Console.ReadLine();
 
                     ReturnToVillage();
@@ -69,7 +69,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
                 GameManager.Instance.CurrentFloors++; // 층수 증가
                 DungeonManager.Instance.dungeonResult = false; // 결과 초기화
-                Console.Write("아무 거나 입력하면 넘어갑니다.");
+                Console.Write("아무거나 입력하면 넘어갑니다.");
                 string input = Console.ReadLine();
                 controller.ChangeSceneState(controller.DungeonScene);
             }

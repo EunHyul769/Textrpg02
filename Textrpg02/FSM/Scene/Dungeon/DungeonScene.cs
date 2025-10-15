@@ -6,7 +6,7 @@
         {
         }
 
-        private int floorNum = GameManager.Instance.CurrentFloors; //현재 층수
+        private int floorNum; //현재 층수
 
         protected override void SetScene()
         {
@@ -15,7 +15,7 @@
 
         protected override void View()
         {
-            
+            floorNum = GameManager.Instance.CurrentFloors; //현재 층수
             Console.WriteLine("[던전 입장]\n");
 
             Console.WriteLine("0. 마을로 귀환");
