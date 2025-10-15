@@ -15,10 +15,8 @@
         {
             Console.WriteLine("[던전 입장]\n");
 
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine("1. 쉬운 던전 | 방어력 5 이상 권장");
-            Console.WriteLine("2. 일반 던전 | 방어력 11 이상 권장");
-            Console.WriteLine("3. 어려운 던전 | 방어력 17 이상 권장\n");
+            Console.WriteLine("1. 던전으로 진입 (1층: 네메아의 방)");
+            Console.WriteLine("0. 나가기\n");
         }
 
         protected override void Control()
@@ -32,16 +30,14 @@
                     controller.ChangeSceneState(controller.VillageScene);
                     break;
                 case "1":
-                    DungeonRewardScene.LevelSetting(1);
-                    controller.ChangeSceneState(controller.DungeonRewardScene);
-                    break;
-                case "2":
-                    DungeonRewardScene.LevelSetting(2);
-                    controller.ChangeSceneState(controller.DungeonRewardScene);
-                    break;
-                case "3":
-                    DungeonRewardScene.LevelSetting(3);
-                    controller.ChangeSceneState(controller.DungeonRewardScene);
+                    Sleep();
+                    Console.WriteLine("...터벅...");
+                    Sleep();
+                    Console.WriteLine("...터벅...");
+                    Sleep();
+                    Console.WriteLine("...터벅...");
+                    Sleep();
+                    controller.ChangeSceneState(controller.BattleLevel1_Scene); //전투 씬 진입
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
