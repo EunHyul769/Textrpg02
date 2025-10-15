@@ -14,11 +14,7 @@ namespace TextRPG.FSM
         // 던전 관련
         public ISceneState DungeonRewardScene { get; private set; }
         public ISceneState DungeonScene { get; private set; }
-        public ISceneState DungeonLevel1_Scene { get; private set; }
-        public ISceneState DungeonLevel2_Scene { get; private set; }
-        public ISceneState DungeonLevel3_Scene { get; private set; }
-        public ISceneState DungeonLevel4_Scene { get; private set; }
-        public ISceneState DungeonLevel5_Scene { get; private set; }
+        public ISceneState DungeonResultScene { get; private set; }
         public ISceneState BattlePlayerTurnScene { get; private set; }
         public ISceneState BattleMonsterTurnScene { get; private set; }
 
@@ -52,10 +48,6 @@ namespace TextRPG.FSM
 
             //배틀 관련 - 임시
             BattleLevel1_Scene = new BattleLevel1_Scene(this);
-            BattleLevel2_Scene = new BattleLevel2_Scene(this);
-            BattleLevel3_Scene = new BattleLevel3_Scene(this);
-            BattleLevel4_Scene = new BattleLevel4_Scene(this);
-            BattleLevel5_Scene = new BattleLevel5_Scene(this);
             BattlePlayerTurnScene = new BattlePlayerTurn_Scene(this);
             BattleMonsterTurnScene = new BattleMonsterTurn_Scene(this);
 

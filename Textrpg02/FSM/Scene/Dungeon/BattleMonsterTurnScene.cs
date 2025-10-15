@@ -43,6 +43,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
                 if (player.Hp <= 0)
                 {
+                    DungeonManager.Instance.dungeonStage = 0; //던전 스테이지 초기화
                     Console.WriteLine("\n플레이어가 쓰러졌습니다...");
                     Thread.Sleep(1000);
                     controller.ChangeSceneState(controller.VillageScene);
