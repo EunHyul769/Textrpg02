@@ -13,9 +13,9 @@ namespace TextRPG.FSM.Scene.Dungeon
         {
             Console.Title = "Battle!!";
 
-            var player = GameManager.Instance.Character;
+            Character player = GameManager.Instance.Character;
 
-            var monsters = new List<Monster>();
+            List<Monster> monsters = new List<Monster>();
             int count = Random.Next(1, 5); 
             for (int i = 0; i < count; i++)
             {
@@ -23,10 +23,10 @@ namespace TextRPG.FSM.Scene.Dungeon
                 monsters.Add(MonsterDB.Monsters[randId].Clone());
             }
 
-            BattleContext.Player = player;
-            BattleContext.Monsters = monsters;
+            GameManager.Instance.MonsterList = monsters;
 
             controller.ChangeSceneState(controller.BattlePlayerTurnScene);
+
         }
 
         protected override void View() 
