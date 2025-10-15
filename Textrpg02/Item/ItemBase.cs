@@ -16,5 +16,7 @@ namespace TextRPG.Item
         }
 
         public abstract string DisplayInfo();
+
+        public abstract ItemBase Clone();
     }
 }

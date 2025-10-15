@@ -63,5 +63,10 @@ namespace TextRPG.Item
             if (BonusMagicResistance > 0) s += $" | 마법저항력 +{BonusMagicResistance}";
             return s;
         }
+
+        public override ItemBase Clone()
+        {
+            return new EquipItem(Name, Description, Price, Type, PermitJob, EquipSlot, BonusMaxHp, BonusMaxMp, BonusAttack, BonusSkillAttack, BonusArmor, BonusMagicResistance);
+        }
     }
 }
