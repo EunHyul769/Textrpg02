@@ -18,6 +18,12 @@ namespace TextRPG.Entity
         public int MagicResistance { get; private set; }
         public JobType Job { get; private set; }
 
+        public double CritChance { get; private set; } = 0.1;   //크리 확률 10퍼 고정
+
+        public double CritMultiplier { get; private set; } = 1.5;   //크뎀 비율 150퍼 고정
+
+        public double AboidChance { get; private set; } = 0.05;     //회피 확률 5퍼 고정
+
         // 초기 세팅값
         public int Level { get; private set; }
         public int Gold { get; private set; }
