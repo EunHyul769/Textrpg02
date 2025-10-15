@@ -14,6 +14,7 @@ namespace TextRPG.Entity
         public int Mp { get; private set; }
         public int Attack { get; private set; }
         public int SkillAttack { get; private set; }
+        public double AttackVariance { get; private set; } = 0.1; // 공격력에 ±10% 편차주기 위함
         public int Armor { get; private set; }
         public int MagicResistance { get; private set; }
         public JobType Job { get; private set; }
@@ -44,6 +45,8 @@ namespace TextRPG.Entity
 
         //습득한 스킬 ID목록
         public List<int> LearnedSkills { get; private set; }
+
+        private static Random rng = new Random();
 
         public Character(string name, int maxHp, int maxMp, int attack, int skillAttack, int armor, int magicResistance, JobType job)
         {
@@ -288,6 +291,19 @@ namespace TextRPG.Entity
                 Console.ReadLine();
             }
         }
+
+        //데미지 계산에 이용되는 실제 공격력(변동)
+        public int GetRandomizedAttack()
+        {
+            double variance = 1 + rng.NextDouble() * (AttackVariance * 2) - AttackVariance;
+            return (int)Math.Round(Attack * variance);
+        }
+        public int GetRandomizedSkillAttack()
+        {
+            double variance = 1 + rng.NextDouble() * (AttackVariance * 2) - AttackVariance;
+            return (int)Math.Round(SkillAttack * variance);
+        }
+        //명시된 공격력의 90%~110% 사이 공격력이 랜덤하게 반환됨
 
         public string DisplayInfo()
         {
