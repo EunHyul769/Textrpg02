@@ -14,18 +14,10 @@ namespace TextRPG.FSM
         // 던전 관련
         public ISceneState DungeonRewardScene { get; private set; }
         public ISceneState DungeonScene { get; private set; }
-        public ISceneState DungeonLevel1_Scene { get; private set; }
-        public ISceneState DungeonLevel2_Scene { get; private set; }
-        public ISceneState DungeonLevel3_Scene { get; private set; }
-        public ISceneState DungeonLevel4_Scene { get; private set; }
-        public ISceneState DungeonLevel5_Scene { get; private set; }
+        public ISceneState DungeonResultScene { get; private set; }
 
         //배틀 관련 - 임시
         public ISceneState BattleLevel1_Scene { get; private set; }
-        public ISceneState BattleLevel2_Scene { get; private set; }
-        public ISceneState BattleLevel3_Scene { get; private set; }
-        public ISceneState BattleLevel4_Scene { get; private set; }
-        public ISceneState BattleLevel5_Scene { get; private set; }
 
 
         // 캐릭터/인벤토리 관련
@@ -50,18 +42,10 @@ namespace TextRPG.FSM
             // 던전 관련
             DungeonRewardScene = new DungeonRewardScene(this);
             DungeonScene = new DungeonScene(this);
-            DungeonLevel1_Scene = new DungeonLevel1_Scene(this);
-            DungeonLevel2_Scene = new DungeonLevel2_Scene(this);
-            DungeonLevel3_Scene = new DungeonLevel3_Scene(this);
-            DungeonLevel4_Scene = new DungeonLevel4_Scene(this);
-            DungeonLevel5_Scene = new DungeonLevel5_Scene(this);
+            DungeonResultScene = new DungeonResultScene(this);
 
             //배틀 관련 - 임시
             BattleLevel1_Scene = new BattleLevel1_Scene(this);
-            BattleLevel2_Scene = new BattleLevel2_Scene(this);
-            BattleLevel3_Scene = new BattleLevel3_Scene(this);
-            BattleLevel4_Scene = new BattleLevel4_Scene(this);
-            BattleLevel5_Scene = new BattleLevel5_Scene(this);
 
 
 

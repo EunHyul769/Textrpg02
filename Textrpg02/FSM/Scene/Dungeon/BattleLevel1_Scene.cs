@@ -212,6 +212,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 {
                     Console.WriteLine("\n플레이어가 쓰러졌습니다...");
                     Console.WriteLine("전투 종료.");
+                    DungeonManager.Instance.dungeonStage = 0; //던전 스테이지 초기화 - 패배 시 넣어야 할 코드 -
                     Sleep();
                     controller.ChangeSceneState(controller.VillageScene);
                     return;
@@ -221,6 +222,11 @@ namespace TextRPG.FSM.Scene.Dungeon
             }
             //if (!anyAttack) 여기서 승리신으로 넘어가면 되겠죠?
 
+            //승리 했을 때 아래 두 줄 코드 넣어주세요. - 엄성진 -
+            //DungeonManager.Instance.dungeonResult = true; //승리 값 전달
+            //controller.ChangeSceneState(controller.DungeonResultScene); // 결과 씬으로 전환
+
+
             while (true)
             {
                 string next = Console.ReadLine();
@@ -229,6 +235,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             }
 
             isPlayerTurn = true;
+
         }
 
         private void UseSkill()
@@ -241,6 +248,7 @@ namespace TextRPG.FSM.Scene.Dungeon
         {
             Console.WriteLine("\n전투에서 퇴각합니다...");
             Console.WriteLine("마을로 돌아갑니다.");
+            DungeonManager.Instance.dungeonStage = 0; //던전 스테이지 초기화
             Sleep();
             controller.ChangeSceneState(controller.VillageScene);
         }
