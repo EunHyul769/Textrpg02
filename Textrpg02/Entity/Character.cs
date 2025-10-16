@@ -340,13 +340,6 @@ namespace TextRPG.Entity
             character.Exp = data.exp;
             character.Stamina = data.stamina;
 
-            character.BonusMaxHp = data.bonusMaxHp;
-            character.BonusMaxMp = data.bonusMaxMp;
-            character.BonusAttack = data.bonusAttack;
-            character.BonusSkillAttack = data.bonusSkillAttack;
-            character.BonusArmor = data.bonusArmor;
-            character.BonusMagicResistance = data.bonusMagicResistance;
-
             //배운 스킬 있으면 스킬도 불러오기
             if (data.learnedSkills != null)
                 character.LearnedSkills = new List<int>(data.learnedSkills);

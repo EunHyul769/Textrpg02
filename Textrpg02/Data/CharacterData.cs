@@ -23,14 +23,6 @@ namespace TextRPG.Data
         public int exp;
         public int stamina;
 
-        // 아이템으로 얻은 추가 능력치
-        public int bonusMaxHp;
-        public int bonusMaxMp;
-        public int bonusAttack;
-        public int bonusSkillAttack;
-        public int bonusArmor;
-        public int bonusMagicResistance;
-
         public List<int> learnedSkills = new List<int>();
     }
 }

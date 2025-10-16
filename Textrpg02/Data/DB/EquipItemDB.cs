@@ -1,27 +1,54 @@
-﻿using TextRPG.Item;
+﻿using Newtonsoft.Json;
+using TextRPG.Item;
 
 namespace TextRPG.Data.DB
 {
     internal class EquipItemDB
     {
-        public Dictionary<int, EquipItem> Items { get; private set; } = new Dictionary<int, EquipItem>()
-        {
-            { 2000, new EquipItem("연습용 칼", "연습할 때 쓰던 칼", 1000, Enum.ItemType.Equip, Enum.JobType.Warrior, Enum.EquipSlot.Weapon, 0, 0, 10, 5, 0) },
-            { 2001, new EquipItem("연습용 활", "연습할 때 쓰던 활", 1000, Enum.ItemType.Equip, Enum.JobType.Archer, Enum.EquipSlot.Weapon, 0, 0, 10, 5, 0) },
-            { 2002, new EquipItem("연습용 지팡이", "연습할 때 쓰던 지팡이", 1000, Enum.ItemType.Equip, Enum.JobType.Mage, Enum.EquipSlot.Weapon, 0, 0, 10, 5, 0) },
+        private const string DATA_FILE_PATH = "EquipItems.json";
 
-            { 3000, new EquipItem("일반 판금 갑옷", "철로 만든 갑옷", 1000, Enum.ItemType.Equip, Enum.JobType.Warrior, Enum.EquipSlot.Armor, 50, 10, 0, 0, 5, 5) },
-            { 3001, new EquipItem("고급 판금 갑옷", "강철로 만든 갑옷", 1000, Enum.ItemType.Equip, Enum.JobType.Warrior, Enum.EquipSlot.Armor, 100, 20, 0, 0, 10, 10) },
-            { 3002, new EquipItem("일반 가죽 갑옷", "가죽으로 만든 갑옷", 1000, Enum.ItemType.Equip, Enum.JobType.Archer, Enum.EquipSlot.Armor, 50, 10, 0, 0, 5, 5) },
-            { 3003, new EquipItem("고급 가죽 갑옷", "고급 가죽으로 만든 갑옷", 1000, Enum.ItemType.Equip, Enum.JobType.Archer, Enum.EquipSlot.Armor, 100, 20, 0, 0, 10, 10) },
-            { 3004, new EquipItem("일반 천 갑옷", "천으로 만든 갑옷", 1000, Enum.ItemType.Equip, Enum.JobType.Mage, Enum.EquipSlot.Armor, 50, 10, 0, 0, 5, 5) },
-            { 3005, new EquipItem("고급 천 갑옷", "고급 천으로 만든 갑옷", 1000, Enum.ItemType.Equip, Enum.JobType.Mage, Enum.EquipSlot.Armor, 100, 20, 0, 0, 10, 10) },
-        };
+        public Dictionary<int, EquipItem> Items { get; private set; }
+
+        public EquipItemDB()
+        {
+            LoadDataFromJson();
+        }
+
+        private void LoadDataFromJson()
+        {
+            if (!File.Exists(DATA_FILE_PATH))
+            {
+                // 파일이 없으면 오류 메시지를 출력하고 빈 DB로 초기화
+                Console.WriteLine($"[DB Error] EquipItem 데이터 파일을 찾을 수 없습니다: {DATA_FILE_PATH}");
+                Items = new Dictionary<int, EquipItem>();
+                return;
+            }
+
+            try
+            {
+                string jsonString = File.ReadAllText(DATA_FILE_PATH);
+
+                // List<EquipItem>으로 역직렬화
+                List<EquipItem> loadedList = JsonConvert.DeserializeObject<List<EquipItem>>(jsonString);
+
+                // List를 Dictionary로 변환 (ID를 Key로 사용)
+                Items = loadedList.ToDictionary(item => item.ID, item => item);
+
+                Console.WriteLine($"[DB Info] {Items.Count}개의 장비 아이템 데이터 로드 완료.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[DB Error] EquipItem JSON 로드 중 오류 발생: {ex.Message}");
+                Items = new Dictionary<int, EquipItem>();
+            }
+        }
 
         public EquipItem? GetByKey(int key)
         {
             if (Items.ContainsKey(key))
+            {
                 return Items[key].Clone() as EquipItem;
+            }
             return null;
         }
     }

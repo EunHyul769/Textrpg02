@@ -1,4 +1,5 @@
-﻿using TextRPG.Data;
+﻿using System.Collections.Concurrent;
+using TextRPG.Data;
 using TextRPG.Enum;
 using TextRPG.Item;
 
@@ -15,14 +16,6 @@ namespace TextRPG.Entity
         public Dictionary<EquipSlot, EquipItem> EquippedItems { get; private set; } = new Dictionary<EquipSlot, EquipItem>();
 
         private Character character;
-
-        public Inventory()
-        {
-            foreach (EquipSlot slot in System.Enum.GetValues(typeof(EquipSlot)))
-            {
-                EquippedItems.Add(slot, null);
-            }
-        }
 
         public Inventory(Character character)
         {
@@ -93,12 +86,12 @@ namespace TextRPG.Entity
         {
             EquipItem currentEquipped = EquippedItems[item.EquipSlot];
 
-            if (currentEquipped != null && currentEquipped.ID == item.ID)
+            if (currentEquipped != null && currentEquipped == item)
             {
                 currentEquipped.IsEquipped = false;
                 character.UnequipItem(currentEquipped);
-                EquippedItems[item.EquipSlot] = null;
-                Console.WriteLine($"[해제 완료] {item.Name}의 장착을 해제했습니다.");
+                EquippedItems[currentEquipped.EquipSlot] = null;
+                Console.WriteLine($"[해제 완료] {currentEquipped.Name}의 장착을 해제했습니다.");
                 return;
             }
 
@@ -121,18 +114,19 @@ namespace TextRPG.Entity
             RemoveItem(item);
         }
 
-        public void SetCharacter(Character character)
+        public static Inventory LoadData(InventoryData inventoryData, Character character)
         {
-            this.character = character;
-        }
-
-        public static Inventory LoadData(InventoryData inventoryData, Dictionary<EquipSlot, EquipItem> restoredEquipped)
-        {
-            Inventory inventory = new Inventory();
+            Inventory inventory = new Inventory(character);
             inventory.Items = inventoryData.items;
             inventory.EquipItemCount = inventoryData.equipItemCount;
             inventory.ConsumeItemCount = inventoryData.consumeItemCount;
-            inventory.EquippedItems = restoredEquipped;
+
+            foreach (ItemBase item in inventory.Items)
+            {
+                if (item is EquipItem equipItem)
+                    if (equipItem.IsEquipped)
+                        inventory.EquipItem(equipItem);
+            }
 
             return inventory;
         }
