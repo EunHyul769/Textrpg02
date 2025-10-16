@@ -73,16 +73,27 @@ namespace TextRPG.FSM.Scene.Dungeon
                 string input = Console.ReadLine();
                 controller.ChangeSceneState(controller.DungeonScene);
             }
-            else
+            else // 패배시
             {
                 GameManager.Instance.CurrentFloors = 1; //층수 초기화
-
-                hpLoss = player.Hp / 2;
-                player.TakeHp(hpLoss);
 
                 Console.WriteLine("던전 실패...");
                 Console.WriteLine($"남은 체력: {player.Hp}");
                 Console.WriteLine("보상 없음.\n");
+
+                Thread.Sleep(1000);
+                Console.Clear();
+                Console.WriteLine("\n...");
+                Thread.Sleep(500);
+                Console.WriteLine("\n...");
+                Thread.Sleep(500);
+                Console.WriteLine("\n...");
+                Thread.Sleep(500);
+                Console.WriteLine("\n부활하여 체력과 마나가 전부 회복되었습니다.");
+                Thread.Sleep(2000);
+
+                player.AddHp(player.MaxHp);
+                player.AddMp(player.MaxMp);
 
                 ReturnToVillage();
             }
