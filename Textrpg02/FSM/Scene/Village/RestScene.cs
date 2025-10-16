@@ -37,14 +37,18 @@ namespace TextRPG.FSM.Scene.Village
                 case "1":
                     if (character.Gold >= 500)
                     {
+                        int recoveredHp = 100;
+                        int recoveredMp = 100;
+                        int recoveredStamina = 50;
+
                         character.TakeGold(500);
-                        character.AddHp(100);
-                        character.AddMp(100);
-                        character.AddStamina(60);
-                        Console.WriteLine("휴식을 완료했습니다.\n");
-                        Console.WriteLine("HP를 100 회복하였습니다.");
-                        Console.WriteLine("MP를 100 회복하였습니다.");
-                        Console.WriteLine("스테미나를 60 회복하였습니다.\n");
+                        character.AddHp(recoveredHp);
+                        character.AddMp(recoveredMp);
+                        character.AddStamina(recoveredStamina);
+                        Console.WriteLine("휴식을 취했습니다.\n");
+                        Console.WriteLine($"HP를 {recoveredHp} 회복하였습니다.");
+                        Console.WriteLine($"MP를 {recoveredMp} 회복하였습니다.");
+                        Console.WriteLine($"스테미나를 {recoveredStamina} 회복하였습니다.\n");
                         Console.WriteLine($"남은 골드: {character.Gold} G");
                         Console.WriteLine($"HP: {character.Hp}");
                         Console.WriteLine($"MP: {character.Mp}");
