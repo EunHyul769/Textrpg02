@@ -50,9 +50,10 @@ namespace TextRPG.FSM.Scene.Dungeon
             if (DungeonManager.Instance.dungeonResult) //승리 시
             {
                 Calculate();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("축하합니다!");
                 Console.WriteLine($"던전을 클리어 하였습니다.\n");
-
+                Console.ResetColor();
                 Console.WriteLine("탐험 결과");
                 Console.WriteLine($"남은 체력: {player.Hp}");
                 Console.WriteLine($"골드 {finalGold} 획득. (추가 보상 {bonusPercent}%)");
@@ -61,7 +62,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 if (floorNum == lastDungeon) //마지막 던전이면 발동
                 {
                     GameManager.Instance.CurrentFloors = 1; //층수 초기화
-                    Console.Write("아무거나 입력하면 넘어갑니다.");
+                    Console.Write("아무 키나 입력하세요.");
                     string input_ = Console.ReadLine();
 
                     ReturnToVillage();
@@ -69,7 +70,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
                 GameManager.Instance.CurrentFloors++; // 층수 증가
                 DungeonManager.Instance.dungeonResult = false; // 결과 초기화
-                Console.Write("아무거나 입력하면 넘어갑니다.");
+                Console.Write("아무 키나 입력하세요.");
                 string input = Console.ReadLine();
                 controller.ChangeSceneState(controller.DungeonScene);
             }
@@ -79,23 +80,24 @@ namespace TextRPG.FSM.Scene.Dungeon
 
                 Console.WriteLine("던전 실패...");
                 Console.WriteLine($"남은 체력: {player.Hp}");
-                Console.WriteLine("보상 없음.\n");
+                Console.WriteLine("보상 없음.");
 
+                ReturnToVillage();
+
+                Thread.Sleep(500);
+                Console.WriteLine("\n...");
                 Thread.Sleep(1000);
-                Console.Clear();
                 Console.WriteLine("\n...");
-                Thread.Sleep(500);
-                Console.WriteLine("\n...");
-                Thread.Sleep(500);
-                Console.WriteLine("\n...");
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
+                Console.WriteLine("\n...일어나세요 용사여...");
+                Thread.Sleep(1500);
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\n부활하여 체력과 마나가 전부 회복되었습니다.");
-                Thread.Sleep(2000);
+                Console.ResetColor();
+                Thread.Sleep(1500);
 
                 player.AddHp(player.MaxHp);
                 player.AddMp(player.MaxMp);
-
-                ReturnToVillage();
             }
         }
 
