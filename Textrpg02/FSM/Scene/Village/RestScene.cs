@@ -40,7 +40,7 @@ namespace TextRPG.FSM.Scene.Village
                         character.TakeGold(500);
                         character.AddHp(100);
                         character.AddMp(100);
-                        character.AddStamina(20);
+                        character.AddStamina(60);
                         Console.WriteLine("휴식을 완료했습니다.\n");
                         Console.WriteLine("HP를 100 회복하였습니다.");
                         Console.WriteLine("MP를 100 회복하였습니다.");
