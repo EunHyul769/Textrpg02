@@ -21,7 +21,7 @@ namespace TextRPG.FSM
         public ISceneState BattleScene { get; private set; }
         public ISceneState BattlePlayerTurnScene { get; private set; }
         public ISceneState BattleMonsterTurnScene { get; private set; }
-
+        public BossBattleScene BossBattleScene { get; private set; }
 
         // 캐릭터/인벤토리 관련
         public ISceneState ConsumptionScene { get; private set; }
@@ -51,7 +51,7 @@ namespace TextRPG.FSM
             BattleScene = new BattleScene(this);
             BattlePlayerTurnScene = new BattlePlayerTurn_Scene(this);
             BattleMonsterTurnScene = new BattleMonsterTurn_Scene(this);
-
+            BossBattleScene = new BossBattleScene(this);
 
 
             // 캐릭터/인벤토리 관련

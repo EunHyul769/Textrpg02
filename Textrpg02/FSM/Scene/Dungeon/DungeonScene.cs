@@ -40,7 +40,14 @@
                     Sleep();
                     Console.WriteLine("...터벅...");
                     Sleep();
-                    controller.ChangeSceneState(controller.BattleScene); //전투 씬 진입
+
+                    var progress = new DungeonProgress();
+
+                    if (progress.IsBossFloor())
+                        controller.ChangeSceneState(controller.BossBattleScene);
+                    else
+                        controller.ChangeSceneState(controller.BattleScene);
+
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
