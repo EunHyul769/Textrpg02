@@ -1,0 +1,26 @@
+﻿[
+  {
+    "ID": 1000,
+    "Name": "빨간 포션",
+    "Description": "Hp를 50 회복시켜줍니다.",
+    "Price": 1000,
+    "HealValue": 50,
+    "MpRecoverValue": 0
+  },
+  {
+    "ID": 1001,
+    "Name": "파란 포션",
+    "Description": "Mp를 50 회복시켜줍니다.",
+    "Price": 1000,
+    "HealValue": 0,
+    "MpRecoverValue": 50
+  },
+  {
+    "ID": 1002,
+    "Name": "엘릭서",
+    "Description": "Hp, Mp를 모두 50 회복시켜줍니다.",
+    "Price": 2000,
+    "HealValue": 50,
+    "MpRecoverValue": 50
+  }
+]

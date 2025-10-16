@@ -16,17 +16,21 @@ namespace TextRPG.Data.DB
 
         private void LoadDataFromJson()
         {
-            if (!File.Exists(DATA_FILE_PATH))
+            string baseDirectory = AppContext.BaseDirectory;
+            string projectRootPath = Path.GetFullPath(Path.Combine(baseDirectory, "..", "..", "..", ".."));
+            string dataFilePath = Path.Combine(projectRootPath, "Textrpg02", "Data", "Json", DATA_FILE_PATH);
+
+            if (!File.Exists(dataFilePath))
             {
                 // 파일이 없으면 오류 메시지를 출력하고 빈 DB로 초기화
-                Console.WriteLine($"[DB Error] EquipItem 데이터 파일을 찾을 수 없습니다: {DATA_FILE_PATH}");
+                Console.WriteLine($"[DB Error] EquipItem 데이터 파일을 찾을 수 없습니다: {dataFilePath}");
                 Items = new Dictionary<int, EquipItem>();
                 return;
             }
 
             try
             {
-                string jsonString = File.ReadAllText(DATA_FILE_PATH);
+                string jsonString = File.ReadAllText(dataFilePath);
 
                 // List<EquipItem>으로 역직렬화
                 List<EquipItem> loadedList = JsonConvert.DeserializeObject<List<EquipItem>>(jsonString);
