@@ -161,7 +161,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         private void Retreat()
         {
-            DungeonManager.Instance.dungeonStage = 0; //던전 스테이지 초기화
+            GameManager.Instance.CurrentFloors = 0; //층수 초기화
             Console.WriteLine("\n전투에서 퇴각합니다...");
             Thread.Sleep(1000);
             controller.ChangeSceneState(controller.VillageScene);
