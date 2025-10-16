@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using TextRPG.Entity;
 using TextRPG.Data;
+using TextRPG.Calculator;
 
 namespace TextRPG.FSM.Scene.Dungeon
 {
@@ -29,9 +30,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             {
                 if (m.Hp <= 0) continue;
 
-                double error = m.Atk * 0.1;
-                int errorInt = (int)(error + 0.9999);
-                int finalDamage = Random.Next(m.Atk - errorInt, m.Atk + errorInt + 1);
+                int finalDamage = DamageCalculator.CalculateAttack(m, player);
 
                 int prevHp = player.Hp;
                 player.TakeHp(finalDamage);
