@@ -32,12 +32,6 @@ namespace TextRPG.Manager
 
         public void SaveGame(Character character, Inventory inventory)
         {
-            var equippedDataForSave = new DictionaryConvertData
-            {
-                keys = inventory.EquippedItems.Keys.ToList(),
-                values = inventory.EquippedItems.Values.ToList()
-            };
-
             var saveData = new GameSaveData
             {
                 CharacterData = new CharacterData
@@ -58,13 +52,6 @@ namespace TextRPG.Manager
                     maxExp = character.MaxExp,
                     exp = character.Exp,
                     stamina = character.Stamina,
-
-                    bonusMaxHp = character.BonusMaxHp,
-                    bonusMaxMp = character.BonusMaxMp,
-                    bonusAttack = character.BonusAttack,
-                    bonusSkillAttack = character.BonusSkillAttack,
-                    bonusArmor = character.BonusArmor,
-                    bonusMagicResistance = character.BonusMagicResistance,
                 },
 
                 InventoryData = new InventoryData
@@ -72,7 +59,6 @@ namespace TextRPG.Manager
                     items = inventory.Items,
                     equipItemCount = inventory.EquipItemCount,
                     consumeItemCount = inventory.ConsumeItemCount,
-                    equippedItems = equippedDataForSave,
                 },
             };
 
@@ -92,20 +78,6 @@ namespace TextRPG.Manager
             {
                 Console.WriteLine($"[저장 오류] 파일 쓰기 실패: {ex.Message}");
             }
-        }
-
-        private Dictionary<EquipSlot, EquipItem> ReassembleEquippedItems(InventoryData inventoryData)
-        {
-            if (inventoryData.equippedItems == null || inventoryData.equippedItems.keys == null)
-            {
-                // 데이터가 저장되지 않았거나 손상된 경우, 빈 딕셔너리 반환
-                return new Dictionary<EquipSlot, EquipItem>();
-            }
-
-            // 딕셔너리의 키(EquipSlot)와 값(EquipItem) 리스트를 Zip하여 다시 Dictionary로 만듭니다.
-            return inventoryData.equippedItems.keys
-                .Zip(inventoryData.equippedItems.values, (key, value) => new { Key = key, Value = value })
-                .ToDictionary(x => x.Key, x => x.Value);
         }
 
         public bool LoadGame(out Character character, out Inventory inventory)
@@ -132,13 +104,10 @@ namespace TextRPG.Manager
 
                 if (loadedData == null) return false;
 
-                Dictionary<EquipSlot, EquipItem> restoredEquipped = ReassembleEquippedItems(loadedData.InventoryData);
-
                 character = Character.LoadData(loadedData.CharacterData);
-                inventory = Inventory.LoadData(loadedData.InventoryData, restoredEquipped);
+                inventory = Inventory.LoadData(loadedData.InventoryData, character);
 
                 character.SetInventory(inventory);
-                inventory.SetCharacter(character);
 
                 Console.WriteLine("[불러오기 완료] 게임 상태를 복원했습니다.");
                 return true;

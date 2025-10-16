@@ -7,7 +7,7 @@ namespace TextRPG.Item
         public int RecoverHP { get; private set; }
         public int RecoverMP { get; private set; }
 
-        public ConsumeItem(string name, string description, int price, int recoverHP, int recoverMP) : base(name, description, price)
+        public ConsumeItem(int id, string name, string description, int price, int recoverHP, int recoverMP) : base(id, name, description, price)
         {
             RecoverHP = recoverHP;
             RecoverMP = recoverMP;
@@ -34,7 +34,7 @@ namespace TextRPG.Item
 
         public override ItemBase Clone()
         {
-            return new ConsumeItem(Name, Description, Price, RecoverHP, RecoverMP);
+            return new ConsumeItem(ID, Name, Description, Price, RecoverHP, RecoverMP);
         }
     }
 }

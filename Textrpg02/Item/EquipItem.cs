@@ -1,4 +1,5 @@
-﻿using TextRPG.Enum;
+﻿using Newtonsoft.Json;
+using TextRPG.Enum;
 
 namespace TextRPG.Item
 {
@@ -19,8 +20,9 @@ namespace TextRPG.Item
         public bool IsEquipped { get; set; } = false;
         public bool IsBuy { get; set; } = false;
 
-        public EquipItem(string name, string description, int price, ItemType type, JobType permitJob, EquipSlot slot, int bonusMaxHp = 0, int bonusMaxMp = 0, int bonusAttack = 0, int bonusSkillAttack = 0, int bonusArmor = 0, int bonusMagicResistance = 0)
-            : base(name, description, price)
+
+        public EquipItem(int id, string name, string description, int price, ItemType type, JobType permitJob, EquipSlot slot, int bonusMaxHp = 0, int bonusMaxMp = 0, int bonusAttack = 0, int bonusSkillAttack = 0, int bonusArmor = 0, int bonusMagicResistance = 0)
+            : base(id, name, description, price)
         {
             // 장비 타입만 받도록 제한
             if (type == ItemType.Equip)
@@ -66,7 +68,7 @@ namespace TextRPG.Item
 
         public override ItemBase Clone()
         {
-            return new EquipItem(Name, Description, Price, Type, PermitJob, EquipSlot, BonusMaxHp, BonusMaxMp, BonusAttack, BonusSkillAttack, BonusArmor, BonusMagicResistance);
+            return new EquipItem(ID, Name, Description, Price, Type, PermitJob, EquipSlot, BonusMaxHp, BonusMaxMp, BonusAttack, BonusSkillAttack, BonusArmor, BonusMagicResistance);
         }
     }
 }

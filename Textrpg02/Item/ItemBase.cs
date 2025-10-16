@@ -1,20 +1,21 @@
-﻿
+﻿using Newtonsoft.Json;
+
 namespace TextRPG.Item
 {
     internal abstract class ItemBase
     {
         // 모든 아이템의 공통 속성
+        public int ID { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int Price { get; private set; }
-        public Guid ID;
 
-        public ItemBase(string name, string description, int price)
+        public ItemBase(int id, string name, string description, int price)
         {
+            ID = id;
             Name = name;
             Description = description;
             Price = price;
-            ID = Guid.NewGuid();
         }
 
         public abstract string DisplayInfo();
