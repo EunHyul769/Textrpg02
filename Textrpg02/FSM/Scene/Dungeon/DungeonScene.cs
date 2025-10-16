@@ -30,7 +30,6 @@
             switch (input)
             {
                 case "0":
-                    GameManager.Instance.CurrentFloors = 0; //층수 초기화
                     controller.ChangeSceneState(controller.VillageScene);
                     break;
                 case "1":

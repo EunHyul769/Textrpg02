@@ -60,7 +60,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
                 if (floorNum == lastDungeon) //마지막 던전이면 발동
                 {
-                    GameManager.Instance.CurrentFloors = 0; //층수 초기화
+                    GameManager.Instance.CurrentFloors = 1; //층수 초기화
                     Console.Write("아무거나 입력하면 넘어갑니다.");
                     string input_ = Console.ReadLine();
 
@@ -75,7 +75,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             }
             else
             {
-                GameManager.Instance.CurrentFloors = 0; //층수 초기화
+                GameManager.Instance.CurrentFloors = 1; //층수 초기화
 
                 hpLoss = player.Hp / 2;
                 player.TakeHp(hpLoss);
