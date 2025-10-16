@@ -48,8 +48,10 @@ namespace TextRPG.FSM.Scene.Dungeon
                     return;
                 }
             }
+            
+            Console.WriteLine("다음 턴으로 넘어가려면 아무 키나 누르세요...");
+            Console.ReadKey();
 
-            Thread.Sleep(500);
             controller.ChangeSceneState(controller.BattlePlayerTurnScene);
         }
 
