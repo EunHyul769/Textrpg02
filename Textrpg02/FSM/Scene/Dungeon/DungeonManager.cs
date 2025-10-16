@@ -21,7 +21,6 @@ namespace TextRPG.FSM.Scene.Dungeon
             }
         }
 
-        public int dungeonStage = 0;
         public bool dungeonResult = false;
 
     }
