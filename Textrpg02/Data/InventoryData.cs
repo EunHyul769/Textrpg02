@@ -9,8 +9,5 @@ namespace TextRPG.Data
 
         public int equipItemCount;
         public int consumeItemCount;
-
-        // 장비 슬롯
-        public DictionaryConvertData equippedItems;
     }
 }
