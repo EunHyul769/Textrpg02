@@ -31,6 +31,7 @@ namespace TextRPG.Entity
         public int MaxExp { get; private set; }
         public int Exp { get; private set; }
         public int Stamina { get; private set; }
+        public int MaxStamina { get; private set; } = 100;  //스태미너 최대치 100 고정
 
         // 아이템으로 얻은 추가 능력치
         public int BonusMaxHp { get; private set; }
@@ -144,7 +145,7 @@ namespace TextRPG.Entity
 
         public int AddStamina(int stamina)
         {
-            Stamina = Math.Min(20, Stamina + stamina);
+            Stamina = Math.Min(MaxStamina, Stamina + stamina);
             return Stamina;
         }
 

@@ -44,11 +44,11 @@ namespace TextRPG.FSM.Scene.Village
                         Console.WriteLine("휴식을 완료했습니다.\n");
                         Console.WriteLine("HP를 100 회복하였습니다.");
                         Console.WriteLine("MP를 100 회복하였습니다.");
-                        Console.WriteLine("스테미나를 20 회복하였습니다.\n");
+                        Console.WriteLine("스테미나를 60 회복하였습니다.\n");
                         Console.WriteLine($"남은 골드: {character.Gold} G");
-                        Console.WriteLine($"HP: {character.Hp} G");
-                        Console.WriteLine($"MP: {character.Mp} G");
-                        Console.WriteLine($"스테미나: {character.Stamina} G");
+                        Console.WriteLine($"HP: {character.Hp}");
+                        Console.WriteLine($"MP: {character.Mp}");
+                        Console.WriteLine($"스테미나: {character.Stamina}");
 
                         ReturnToVillage();
                     }
