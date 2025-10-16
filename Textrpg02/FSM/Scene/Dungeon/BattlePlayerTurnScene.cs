@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using TextRPG.Entity;
 using TextRPG.Data;
+using TextRPG.Calculator;
 
 namespace TextRPG.FSM.Scene.Dungeon
 {
@@ -120,9 +121,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 return;
             }
 
-            double error = player.Attack * 0.1;
-            int errorInt = (int)(error + 0.9999);
-            int finalAttack = Random.Next(player.Attack - errorInt, player.Attack + errorInt + 1);
+            int finalAttack = DamageCalculator.CalculateAttack(player, target);
 
             int prevHp = target.Hp;
             target.Hp -= finalAttack;
@@ -162,7 +161,6 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         private void Retreat()
         {
-            DungeonManager.Instance.dungeonStage = 0; //던전 스테이지 초기화
             Console.WriteLine("\n전투에서 퇴각합니다...");
             Thread.Sleep(1000);
             controller.ChangeSceneState(controller.VillageScene);
