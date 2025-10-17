@@ -1,5 +1,5 @@
-﻿using TextRPG;
-using TextRPG.Entity;
+﻿using TextRPG.Entity;
+using TextRPG.SkillSystem;
 
 namespace TextRPG.Calculator
 {

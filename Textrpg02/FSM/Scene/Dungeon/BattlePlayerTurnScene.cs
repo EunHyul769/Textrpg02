@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using TextRPG.Entity;
-using TextRPG.Data;
+﻿using TextRPG.Entity;
 using TextRPG.Calculator;
+using TextRPG.Data.DB;
+using TextRPG.SkillSystem;
 
 namespace TextRPG.FSM.Scene.Dungeon
 {

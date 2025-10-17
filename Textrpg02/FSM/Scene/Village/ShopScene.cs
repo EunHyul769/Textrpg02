@@ -1,5 +1,6 @@
 ﻿using TextRPG.Entity;
 using TextRPG.Item;
+using TextRPG.ShopSystem;
 
 namespace TextRPG.FSM.Scene.Village
 {

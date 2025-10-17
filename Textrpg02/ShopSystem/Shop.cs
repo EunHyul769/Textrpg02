@@ -2,7 +2,7 @@
 using TextRPG.Item;
 using TextRPG.Manager;
 
-namespace TextRPG.Shop
+namespace TextRPG.ShopSystem
 {
     internal class Shop
     {
