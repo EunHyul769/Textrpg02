@@ -1,4 +1,5 @@
 ﻿using TextRPG.Entity;
+using TextRPG.ShopSystem;
 
 namespace TextRPG
 {

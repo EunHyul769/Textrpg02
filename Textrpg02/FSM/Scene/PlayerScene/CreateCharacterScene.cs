@@ -1,5 +1,6 @@
 ﻿using TextRPG.Entity;
 using TextRPG.Enum;
+using TextRPG.ShopSystem;
 
 namespace TextRPG.FSM.Scene.PlayerScene
 {

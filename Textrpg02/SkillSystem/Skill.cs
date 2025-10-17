@@ -1,6 +1,6 @@
 ﻿using TextRPG.Entity;
 
-namespace TextRPG.Skills
+namespace TextRPG.SkillSystem
 {
     internal class Skill
     {
