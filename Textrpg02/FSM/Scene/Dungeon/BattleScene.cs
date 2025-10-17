@@ -17,22 +17,23 @@ namespace TextRPG.FSM.Scene.Dungeon
             List<Monster> monsters = new List<Monster>();
 
             int floor = GameManager.Instance.CurrentFloors;
+
+            // 🧩 층수 기반 몬스터 그룹 계산 (1~3, 4~6, 7~9 ...)
+            int groupStart = ((floor - 1) / 3) * 3 + 1;
+            int groupEnd = groupStart + 2;
+
             List<int> availableKeys = new List<int>();
 
-            // 🧩 층수 구간별 일반 몬스터 제한
-            if (floor >= 1 && floor <= 3)
+            // 등록된 몬스터 중에서 해당 구간(3개)만 추가
+            for (int i = groupStart; i <= groupEnd; i++)
             {
-                availableKeys.AddRange(new[] { 1, 2, 3 });
+                if (MonsterDB.Monsters.ContainsKey(i))
+                    availableKeys.Add(i);
             }
-            else if (floor >= 4 && floor <= 6)
-            {
-                availableKeys.AddRange(new[] { 4, 5, 6 });
-            }
-            else
-            {
-                // 그 이후층도 대비해서 기본값으로 전체 키를 허용
+
+            // 예비용: 해당 구간 몬스터가 없으면 전체에서 랜덤
+            if (availableKeys.Count == 0)
                 availableKeys.AddRange(MonsterDB.Monsters.Keys);
-            }
 
             int count = Random.Next(1, 4); // 일반 몬스터 개수 (1~3마리)
 
