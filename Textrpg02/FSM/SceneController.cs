@@ -20,7 +20,7 @@ namespace TextRPG.FSM
         public ISceneState BattleScene { get; private set; }
         public ISceneState BattlePlayerTurnScene { get; private set; }
         public ISceneState BattleMonsterTurnScene { get; private set; }
-        public BossBattleScene BossBattleScene { get; private set; }
+        public ISceneState BossBattleScene { get; private set; }
 
         // 캐릭터/인벤토리 관련
         public ISceneState ConsumptionScene { get; private set; }

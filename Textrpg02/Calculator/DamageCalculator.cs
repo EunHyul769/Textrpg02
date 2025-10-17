@@ -1,5 +1,5 @@
 ﻿using TextRPG;
-using TextRPG.Entity; // Player, Monster 클래스를 사용하기 위함 물론, 스킬도
+using TextRPG.Entity;
 
 namespace TextRPG.Calculator
 {
