@@ -1,4 +1,6 @@
-﻿using TextRPG.Entity;
+﻿using System;
+using TextRPG.Entity;
+using TextRPG.Manager;
 
 namespace TextRPG.FSM.Scene.Village
 {
@@ -55,6 +57,31 @@ namespace TextRPG.FSM.Scene.Village
                         Console.WriteLine($"스테미나: {character.Stamina}");
 
                         ReturnToVillage();
+
+                        QuestManager.Instance.questCount++;
+                        if (QuestManager.Instance.questCount == 10) //10번 휴식시 퀘스트 완료 메세지 나오도록.
+                        {
+                            Thread.Sleep(500);
+                            Console.WriteLine("...zzz...");
+                            Thread.Sleep(500);
+                            Console.WriteLine("...zzz...");
+                            Thread.Sleep(500);
+                            Console.WriteLine("...zzz...");
+                            Thread.Sleep(1000);
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.WriteLine("[히든 퀘스트 성공!]");
+                            Thread.Sleep(500);
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.WriteLine($"당신은 {QuestManager.Instance.questCount}번의 휴식을 취하였습니다.");
+                            Thread.Sleep(500);
+                            Console.WriteLine("푹 쉰 덕분에 기력이 넘쳐흘러 다량의 경험치를 획득하였습니다!");
+                            Console.ResetColor();
+                            Thread.Sleep(500);
+                            character.AddExp(100);
+
+                            Console.WriteLine("\n아무 키나 눌러주세요.");
+                            Console.ReadLine();
+                        }
                     }
                     else
                     {
