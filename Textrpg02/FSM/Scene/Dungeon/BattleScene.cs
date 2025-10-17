@@ -15,29 +15,45 @@ namespace TextRPG.FSM.Scene.Dungeon
 
             Character player = GameManager.Instance.Character;
             List<Monster> monsters = new List<Monster>();
-            List<int> keys = new List<int>(MonsterDB.Monsters.Keys);
 
             int floor = GameManager.Instance.CurrentFloors;
-            int count = Random.Next(1, 5);
+            List<int> availableKeys = new List<int>();
+
+            // 🧩 층수 구간별 일반 몬스터 제한
+            if (floor >= 1 && floor <= 3)
+            {
+                availableKeys.AddRange(new[] { 1, 2, 3 });
+            }
+            else if (floor >= 4 && floor <= 6)
+            {
+                availableKeys.AddRange(new[] { 4, 5, 6 });
+            }
+            else
+            {
+                // 그 이후층도 대비해서 기본값으로 전체 키를 허용
+                availableKeys.AddRange(MonsterDB.Monsters.Keys);
+            }
+
+            int count = Random.Next(1, 4); // 일반 몬스터 개수 (1~3마리)
 
             // 🧩 일반 몬스터 생성
             for (int i = 0; i < count; i++)
             {
-                int randKey = keys[Random.Next(keys.Count)];
+                int randKey = availableKeys[Random.Next(availableKeys.Count)];
                 Monster newMonster = MonsterDB.Monsters[randKey].Clone();
                 monsters.Add(newMonster);
             }
 
-            // 🧩 3층마다 보스 추가 (보스 ID는 100단위)
+            // 🧩 3층마다 100단위 보스 추가
             if (floor % 3 == 0)
             {
-                // 예: 3층→100, 6층→200, 9층→300 ...
-                int bossKey = (floor / 3) * 100;
+                int bossKey = (floor / 3) * 100; // 3층→100, 6층→200, 9층→300 ...
 
                 if (MonsterDB.Monsters.ContainsKey(bossKey))
                 {
                     Monster boss = MonsterDB.Monsters[bossKey].Clone();
                     monsters.Add(boss);
+
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"\n보스 '{boss.Name}' 이(가) 전투에 등장했습니다!");
                     Console.ResetColor();
@@ -45,7 +61,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"\n⚠ MonsterDB에 보스 ID {bossKey}가 없습니다. 기본 몬스터로 대체합니다.");
+                    Console.WriteLine($"\n⚠ MonsterDB에 보스 ID {bossKey}가 없습니다.");
                     Console.ResetColor();
                 }
             }
@@ -70,5 +86,5 @@ namespace TextRPG.FSM.Scene.Dungeon
 
         protected override void View() { }
         protected override void Control() { }
-    }
+    }  
 }
