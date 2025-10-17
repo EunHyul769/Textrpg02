@@ -1,0 +1,187 @@
+[
+    {
+        "id": 10,
+        "name": "강타",
+        "power": 1.5,
+        "sPower": 0.0,
+        "flat": 5,
+        "mpCost": 3,
+        "isMultiHit": false,
+        "hits": 1
+    },
+    {
+        "id": 11,
+        "name": "이연참",
+        "power": 1.0,
+        "sPower": 0.0,
+        "flat": 5,
+        "mpCost": 5,
+        "isMultiHit": true,
+        "hits": 2
+    },
+    {
+        "id": 12,
+        "name": "펀토",
+        "power": 2.5,
+        "sPower": 0.0,
+        "flat": 8,
+        "mpCost": 8,
+        "isMultiHit": false,
+        "hits": 1
+    },
+    {
+        "id": 13,
+        "name": "승룡검",
+        "power": 3.0,
+        "sPower": 0.0,
+        "flat": 10,
+        "mpCost": 10,
+        "isMultiHit": false,
+        "hits": 1
+    },
+
+    {
+        "id": 20,
+        "name": "더블 샷",
+        "power": 0.75,
+        "sPower": 0.0,
+        "flat": 0,
+        "mpCost": 3,
+        "isMultiHit": true,
+        "hits": 2
+    },
+    {
+        "id": 21,
+        "name": "속사",
+        "power": 2.7,
+        "sPower": 0.0,
+        "flat": 0,
+        "mpCost": 5,
+        "isMultiHit": false,
+        "hits": 1
+    },
+    {
+        "id": 22,
+        "name": "일괄 사격",
+        "power": 3.5,
+        "sPower": 0.0,
+        "flat": 0,
+        "mpCost": 8,
+        "isMultiHit": false,
+        "hits": 1
+    },
+    {
+        "id": 23,
+        "name": "텐 플러스",
+        "power": 2.5,
+        "sPower": 0.0,
+        "flat": 0,
+        "mpCost": 12,
+        "isMultiHit": true,
+        "hits": 2
+    },
+
+    {
+        "id": 30,
+        "name": "매직 미사일",
+        "power": 0.0,
+        "sPower": 3.0,
+        "flat": 0,
+        "mpCost": 5,
+        "isMultiHit": false,
+        "hits": 1
+    },
+
+    {
+        "id": 31,
+        "name": "파이어 볼",
+        "power": 0.0,
+        "sPower": 4.0,
+        "flat": 0,
+        "mpCost": 8,
+        "isMultiHit": false,
+        "hits": 1
+    },
+
+    {
+        "id": 32,
+        "name": "아이스 스피어",
+        "power": 0.0,
+        "sPower": 5.0,
+        "flat": 0,
+        "mpCost": 11,
+        "isMultiHit": false,
+        "hits": 1
+    },
+
+    {
+        "id": 33,
+        "name": "스톤 샤워",
+        "power": 0.0,
+        "sPower": 2.0,
+        "flat": 0,
+        "mpCost": 15,
+        "isMultiHit": true,
+        "hits": 3
+    },
+    {
+        "id": 34,
+        "name": "윈드 엣지",
+        "power": 0.0,
+        "sPower": 3.5,
+        "flat": 10,
+        "mpCost": 20,
+        "isMultiHit": true,
+        "hits": 2
+    },
+    {
+        "id": 35,
+        "name": "콜 라이트닝",
+        "power": 0.0,
+        "sPower": 8.5,
+        "flat": 0,
+        "mpCost": 25,
+        "isMultiHit": false,
+        "hits": 1
+    },
+    {
+        "id": 36,
+        "name": "익스팅션 레이",
+        "power": 0.0,
+        "sPower": 10.0,
+        "flat": 10,
+        "mpCost": 32,
+        "isMultiHit": false,
+        "hits": 1
+    },
+    {
+        "id": 37,
+        "name": "익스플로젼",
+        "power": 0.0,
+        "sPower": 12.0,
+        "flat": 0,
+        "mpCost": 35,
+        "isMultiHit": false,
+        "hits": 1
+    },
+    {
+        "id": 38,
+        "name": "템페스트",
+        "power": 0.0,
+        "sPower": 2.9,
+        "flat": 0,
+        "mpCost": 42,
+        "isMultiHit": true,
+        "hits": 5
+    },
+    {
+        "id": 39,
+        "name": "슈퍼 노바",
+        "power": 0.0,
+        "sPower": 16.0,
+        "flat": 20,
+        "mpCost": 50,
+        "isMultiHit": false,
+        "hits": 1
+    },
+]
