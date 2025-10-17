@@ -1,12 +1,15 @@
 ﻿using TextRPG.Data;
 using TextRPG.Enum;
 using TextRPG.Item;
+using TextRPG.Data.DB;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TextRPG.Entity
 {
     internal class Character
     {
         // 생성자 주입
+        
         public string Name { get; private set; }
         public int MaxHp { get; private set; }
         public int Hp { get; private set; }
@@ -61,6 +64,7 @@ namespace TextRPG.Entity
             Armor = armor;
             MagicResistance = magicResistance;
             Job = job;
+            
 
             Level = 1;
             Gold = 5000;
@@ -230,55 +234,11 @@ namespace TextRPG.Entity
             Console.WriteLine($"레벨이 {Level}로 상승했습니다.");
             Console.WriteLine($"Hp가 회복됩니다.\n");
 
-            if (Level == 3) //3렙 달성시 직업별로 스킬 습득
+            if (JobSkillDB.JobSkillTable.TryGetValue(Job, out var levelMap)
+            && levelMap.TryGetValue(Level, out var skillList))
             {
-
-                if (Job == JobType.Warrior)
-                {
-                    LearnSkill(10);
-                }
-                else if (Job == JobType.Archer)
-                {
-                    LearnSkill(20);
-                }
-                else if (Job == JobType.Mage)
-                {
-                    LearnSkill(30);
-                }
-            }
-
-            if (Level == 6) //6렙 달성시 직업별로 스킬 습득
-            {
-
-                if (Job == JobType.Warrior)
-                {
-                    LearnSkill(11);
-                }
-                else if (Job == JobType.Archer)
-                {
-                    LearnSkill(21);
-                }
-                else if (Job == JobType.Mage)
-                {
-                    LearnSkill(31);
-                }
-            }
-
-            if (Level == 10) //10렙 달성시 직업별로 스킬 습득
-            {
-
-                if (Job == JobType.Warrior)
-                {
-                    LearnSkill(12);
-                }
-                else if (Job == JobType.Archer)
-                {
-                    LearnSkill(22);
-                }
-                else if (Job == JobType.Mage)
-                {
-                    LearnSkill(32);
-                }
+                foreach (var skillId in skillList)
+                    LearnSkill(skillId);
             }
         }
 
@@ -288,7 +248,7 @@ namespace TextRPG.Entity
             if (!LearnedSkills.Contains(skillId))
             { 
                 LearnedSkills.Add(skillId);
-                Console.WriteLine($"{Name}이(가) {Data.SkillDB.Skills[skillId].Name} 스킬을 익혔습니다!");
+                Console.WriteLine($"{Name}이(가) {SkillDB.Skills[skillId].Name} 스킬을 익혔습니다!");
                 Console.ReadLine();
             }
         }

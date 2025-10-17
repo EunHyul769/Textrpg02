@@ -9,6 +9,7 @@ namespace TextRPG.Data
         public EquipItemDB EquipItemDB { get; private set; }
         public MonsterDB MonsterDB { get; private set; }
         public SkillDB SkillDB { get; private set; }
+        public JobSkillDB JobSkillDB { get; private set; }
 
         public GameData()
         {
@@ -16,6 +17,7 @@ namespace TextRPG.Data
             EquipItemDB = new EquipItemDB();
             MonsterDB = new MonsterDB();
             SkillDB = new SkillDB();
+            JobSkillDB = new JobSkillDB();
         }
     }
 }
