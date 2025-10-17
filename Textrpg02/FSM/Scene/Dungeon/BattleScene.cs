@@ -16,10 +16,11 @@ namespace TextRPG.FSM.Scene.Dungeon
             Character player = GameManager.Instance.Character;
             List<Monster> monsters = new List<Monster>();
             List<int> keys = new List<int>(MonsterDB.Monsters.Keys);
-            int floor = GameManager.Instance.CurrentFloors;
 
-            // 1. 일반 몬스터 구성
+            int floor = GameManager.Instance.CurrentFloors;
             int count = Random.Next(1, 5);
+
+            // 🧩 일반 몬스터 생성
             for (int i = 0; i < count; i++)
             {
                 int randKey = keys[Random.Next(keys.Count)];
@@ -27,10 +28,12 @@ namespace TextRPG.FSM.Scene.Dungeon
                 monsters.Add(newMonster);
             }
 
-            // 2. 현재 층이 10의 배수라면 보스 몬스터 추가
-            if (floor % 10 == 0)
+            // 🧩 3층마다 보스 추가 (보스 ID는 100단위)
+            if (floor % 3 == 0)
             {
-                int bossKey = floor; // 예: 10층 -> ID 10, 20층 -> ID 20
+                // 예: 3층→100, 6층→200, 9층→300 ...
+                int bossKey = (floor / 3) * 100;
+
                 if (MonsterDB.Monsters.ContainsKey(bossKey))
                 {
                     Monster boss = MonsterDB.Monsters[bossKey].Clone();
@@ -47,7 +50,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 }
             }
 
-            // 3. 전투 세팅
+            // 🧩 전투 세팅
             GameManager.Instance.MonsterList = monsters;
 
             Console.Clear();
@@ -66,7 +69,6 @@ namespace TextRPG.FSM.Scene.Dungeon
         }
 
         protected override void View() { }
-
         protected override void Control() { }
     }
 }
