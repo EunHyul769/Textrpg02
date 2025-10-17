@@ -12,7 +12,6 @@ namespace TextRPG.FSM
         public ISceneState CurrentState { get; private set; }
 
         // 던전 관련
-        public ISceneState DungeonRewardScene { get; private set; }
         public ISceneState DungeonScene { get; private set; }
         public ISceneState DungeonResultScene { get; private set; }
 
@@ -43,7 +42,6 @@ namespace TextRPG.FSM
         public void Start()
         {
             // 던전 관련
-            DungeonRewardScene = new DungeonRewardScene(this);
             DungeonScene = new DungeonScene(this);
             DungeonResultScene = new DungeonResultScene(this);
 
