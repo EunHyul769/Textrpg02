@@ -2,9 +2,7 @@
 {
     internal class DungeonScene : SceneBase
     {
-        public DungeonScene(SceneController controller) : base(controller)
-        {
-        }
+        public DungeonScene(SceneController controller) : base(controller) { }
 
         private int floorNum; //현재 층수
 
@@ -17,7 +15,6 @@
         {
             floorNum = GameManager.Instance.CurrentFloors; //현재 층수
             Console.WriteLine("[던전 입장]\n");
-
             Console.WriteLine("0. 마을로 귀환");
             Console.WriteLine($"1. 던전으로 진입 ({floorNum}층)\n");
         }
@@ -41,14 +38,10 @@
                     Console.WriteLine("...터벅...");
                     Sleep();
 
-                    var progress = new DungeonProgress();
-
-                    if (progress.IsBossFloor())
-                        controller.ChangeSceneState(controller.BossBattleScene);
-                    else
-                        controller.ChangeSceneState(controller.BattleScene);
-
+                    // 🔹 보스 씬 대신 일반 전투 씬으로만 이동
+                    controller.ChangeSceneState(controller.BattleScene);
                     break;
+
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
                     Sleep();
