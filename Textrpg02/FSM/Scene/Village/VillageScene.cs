@@ -16,7 +16,6 @@ namespace TextRPG.FSM.Scene.Village
         protected override void SetScene()
         {
             Console.Title = "영웅의 시련";
-            Console.ReadLine();
             character = GameManager.Instance.Character;
             inventory = GameManager.Instance.Character.Inventory;
         }
