@@ -42,16 +42,15 @@ namespace TextRPG.Calculator
             return 0;
         }
 
-        // 🔥 스킬 공격 (다단히트/단일히트 모두 대응)
+        // 🪄 스킬 공격 (단일/다중 히트 모두 처리)
         private static double CalculateSkillAttack(object attacker, object defender, Skill skill)
         {
-            double totalDamage = 0;
             bool isMagical = skill.SPower > skill.Power;
 
-            // 1️⃣ 공격자에 따라 스킬 데미지 가져오기
             if (attacker is Character c)
             {
                 var hitDamages = skill.CalculateSkillDamage(c);
+                double totalDamage = 0;
 
                 foreach (var hit in hitDamages)
                 {
@@ -59,23 +58,45 @@ namespace TextRPG.Calculator
                     double final = ApplyDefense(hit, def);
                     totalDamage += final;
 
-                    Log($"{c.Name}의 {skill.Name} ▶ {final:F0} 데미지!", ConsoleColor.Magenta);
+                    // 💥 즉시 HP 반영
+                    if (defender is Monster m)
+                    {
+                        m.Hp -= (int)Math.Round(final);
+                        if (m.Hp < 0) m.Hp = 0;
+
+                        Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (몬스터 HP: {m.Hp})", ConsoleColor.Magenta);
+                    }
+                    else if (defender is Character target)
+                    {
+                        target.TakeHp((int)Math.Round(final));
+
+                        Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (플레이어 HP: {target.Hp})", ConsoleColor.Red);
+                    }
                 }
+
+                return totalDamage; // 총합 반환 (표시용)
             }
-            else if (attacker is Monster m)
+
+            if (attacker is Monster mon)
             {
-                double baseDamage = m.Atk * (skill.Power + skill.SPower);
+                // 몬스터 스킬: 단일 히트 구조로 계산
+                double baseDamage = mon.Atk * (skill.Power + skill.SPower);
                 double def = GetDefenseValue(defender, skill);
                 double final = ApplyDefense(baseDamage, def);
-                totalDamage = final;
 
-                Log($"{m.Name}이(가) {skill.Name}을(를) 사용했다! ▶ {final:F0}", ConsoleColor.Red);
+                if (defender is Character target)
+                {
+                    target.TakeHp((int)Math.Round(final));
+                    Log($"{mon.Name}이(가) {skill.Name}을(를) 사용했다! ▶ {final:F0} (플레이어 HP: {target.Hp})", ConsoleColor.Red);
+                }
+
+                return final;
             }
 
-            return totalDamage;
+            return 0;
         }
 
-        // 🧱 방어 계산
+        // 🛡️ 방어력 값 추출 (기본/스킬 공격 공통)
         private static int GetDefenseValue(object defender, Skill? skill)
         {
             if (defender is Character c)
@@ -94,6 +115,7 @@ namespace TextRPG.Calculator
 
             return 0;
         }
+
 
         // 💥 회피 (5%)
         private static bool TryEvade(object defender) => rng.NextDouble() < 0.05;
