@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TextRPG.Entity;
 using TextRPG.Data;
+using TextRPG.Utils;
 
 namespace TextRPG.FSM.Scene.Dungeon
 {
@@ -18,7 +19,7 @@ namespace TextRPG.FSM.Scene.Dungeon
 
             int floor = GameManager.Instance.CurrentFloors;
 
-            // 🧩 층수 기반 몬스터 그룹 계산 (1~3, 4~6, 7~9 ...)
+            // 층수 기반 몬스터 그룹 계산 (1~3, 4~6, 7~9 ...)
             int groupStart = ((floor - 1) / 3) * 3 + 1;
             int groupEnd = groupStart + 2;
 
@@ -33,10 +34,10 @@ namespace TextRPG.FSM.Scene.Dungeon
             if (availableKeys.Count == 0)
                 availableKeys.AddRange(MonsterDB.Monsters.Keys);
 
-            // 🧩 보스 여부 체크
+            // 보스 여부 체크
             bool isBossFloor = (floor % 3 == 0);
 
-            // 🧩 보스층이면 일반 몬스터 생략
+            // 보스층이면 일반 몬스터 생략
             if (!isBossFloor)
             {
                 int count = Random.Next(1, 4); // 일반 몬스터 개수 (1~3마리)
@@ -48,7 +49,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                 }
             }
 
-            // 🧩 3층마다 100단위 보스 생성
+            // 3층마다 100단위 보스 생성
             if (isBossFloor)
             {
                 int bossKey = (floor / 3) * 100; // 3층→100, 6층→200, 9층→300 ...
@@ -65,12 +66,12 @@ namespace TextRPG.FSM.Scene.Dungeon
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"\n⚠ MonsterDB에 보스 ID {bossKey}가 없습니다.");
+                    Console.WriteLine($"\nMonsterDB에 보스 ID {bossKey}가 없습니다.");
                     Console.ResetColor();
                 }
             }
 
-            // 🧩 전투 세팅
+            // 전투 세팅
             GameManager.Instance.MonsterList = monsters;
 
             Console.Clear();
@@ -81,8 +82,9 @@ namespace TextRPG.FSM.Scene.Dungeon
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
+            Logger.Log($"Lv.{player.Level} {player.Name} ({player.Job})", ConsoleColor.DarkMagenta);
+            Logger.Log($"HP {player.Hp}/{player.MaxHp}", ConsoleColor.Red);
+            Logger.Log($"MP {player.Mp}/{player.MaxMp}", ConsoleColor.Blue);
             Console.WriteLine();
 
             controller.ChangeSceneState(controller.BattlePlayerTurnScene);

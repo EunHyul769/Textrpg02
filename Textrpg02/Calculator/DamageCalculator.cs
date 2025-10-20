@@ -7,24 +7,24 @@ namespace TextRPG.Calculator
     {
         private static readonly Random rng = new Random();
 
-        // 🎯 진입점: 모든 공격 계산
+        //  모든 공격 계산
         public static int CalculateAttack(object attacker, object defender, Skill? skill = null)
         {
-            // 🎯 1️⃣ 회피 판정
+            // 회피 판정
             if (TryEvade(defender))
             {
                 Log($"{GetName(defender)}이(가) 재빠르게 공격을 회피했다!", ConsoleColor.Cyan);
                 return 0;
             }
 
-            // ⚔️ 2️⃣ 기본 공격
+            // 기본 공격
             if (skill == null)
             {
                 double damage = CalculateBasicAttack(attacker, defender);
                 return Math.Max(1, (int)Math.Round(damage));
             }
 
-            // 🔥 3️⃣ 스킬 공격 (다단히트 등 내부 처리)
+            // 스킬 공격 (다단히트 등 내부 처리)
             else
             {
                 CalculateSkillAttack(attacker, defender, skill);  // void 함수
@@ -33,7 +33,7 @@ namespace TextRPG.Calculator
         }
 
 
-        // ⚔️ 기본 공격
+        // ⚔기본 공격
         private static double CalculateBasicAttack(object attacker, object defender)
         {
             if (attacker is Character c)
@@ -52,7 +52,7 @@ namespace TextRPG.Calculator
             return 0;
         }
 
-        // 🪄 스킬 공격 (단일/다중 히트 모두 처리)
+        // 스킬 공격 (단일/다중 히트 모두 처리)
         private static void CalculateSkillAttack(object attacker, object defender, Skill skill)
         {
             bool isMagical = skill.SPower > skill.Power;
@@ -69,11 +69,13 @@ namespace TextRPG.Calculator
 
                     if (defender is Monster m)
                     {
-                        // 💬 로그는 HP 감소 전 기준으로, 감소 후 예상값 출력
+                        // 로그는 HP 감소 전 기준으로, 감소 후 예상값 출력
                         int expectedHp = Math.Max(0, m.Hp - damageInt);
                         Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (몬스터 HP: {expectedHp})", ConsoleColor.Magenta);
 
-                        // 💥 실제 HP 감소
+                        Thread.Sleep(400);
+
+                        // 실제 HP 감소
                         m.Hp = expectedHp;
                     }
                     else if (defender is Character target)
@@ -84,7 +86,7 @@ namespace TextRPG.Calculator
                         target.TakeHp(damageInt);
                     }
 
-                    // 🎬 히트 간 템포 (0.3초)
+                    // 히트 간 템포 (0.3초)
                     System.Threading.Thread.Sleep(300);
                 }
             }
@@ -106,7 +108,7 @@ namespace TextRPG.Calculator
         }
 
 
-        // 🛡️ 방어력 값 추출 (기본/스킬 공격 공통)
+        // 방어력 값 추출 (기본/스킬 공격 공통)
         private static int GetDefenseValue(object defender, Skill? skill)
         {
             if (defender is Character c)
@@ -127,10 +129,10 @@ namespace TextRPG.Calculator
         }
 
 
-        // 💥 회피 (5%)
+        // 회피 (5%)
         private static bool TryEvade(object defender) => rng.NextDouble() < 0.05;
 
-        // 💫 크리티컬 (기본 공격 전용)
+        // 크리티컬 (기본 공격 전용)
         private static double ApplyCritical(double baseDamage, Character c)
         {
             if (rng.NextDouble() < c.CritChance)
@@ -142,13 +144,13 @@ namespace TextRPG.Calculator
             return baseDamage;
         }
 
-        // 🛡️ 방어력 적용 (모든 공격)
+        // 방어력 적용 (모든 공격)
         private static double ApplyDefense(double baseDamage, double defenseValue)
         {
             return Math.Max(1, baseDamage - (defenseValue / 2.0));
         }
 
-        // 🔊 출력 (색상 + 자동 복구)
+        // 출력 (색상 + 자동 복구)
         private static void Log(string message, ConsoleColor color)
         {
             var prev = Console.ForegroundColor;
@@ -156,11 +158,11 @@ namespace TextRPG.Calculator
             Console.WriteLine(message);
             Console.ForegroundColor = prev;
 
-            // 💡 즉시 출력(버퍼 비우기)
+            // 즉시 출력(버퍼 비우기)
             Console.Out.Flush();
         }
 
-        // 🧩 이름 추출
+        // 이름 추출
         private static string GetName(object entity)
         {
             return entity switch
@@ -172,7 +174,5 @@ namespace TextRPG.Calculator
         }
     }
 }
-//캐릭터cs에 CritChance, CritMultiplier 속성 추가
-
 //일단은 몬스터도 스킬을 쓸 수 있게 설계
 
