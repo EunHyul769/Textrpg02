@@ -2,7 +2,7 @@
 using TextRPG.Enum;
 using TextRPG.Item;
 using TextRPG.Data.DB;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using TextRPG.Manager;
 
 namespace TextRPG.Entity
 {
@@ -235,7 +235,7 @@ namespace TextRPG.Entity
             Console.WriteLine($"Hp가 회복됩니다.\n");
             Console.WriteLine($"Mp가 회복됩니다.\n");
 
-            var jobSkillDB = GameData.Instance.JobSkillDB;
+            var jobSkillDB = DataManager.Instance.GameData.JobSkillDB;
             if (JobSkillDB.JobSkillTable.TryGetValue(Job, out var levelMap)
             && levelMap.TryGetValue(Level, out var skillList))
             {

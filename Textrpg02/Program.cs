@@ -1,5 +1,4 @@
-﻿using TextRPG.Data;
-using TextRPG.FSM;
+﻿using TextRPG.FSM;
 
 namespace TextRPG
 {
@@ -8,7 +7,6 @@ namespace TextRPG
         static void Main(string[] args)
         {
             SceneController sceneController = new SceneController();
-            GameData gameData = new GameData();
             sceneController.Start();
 
             // 메인 게임 루프
