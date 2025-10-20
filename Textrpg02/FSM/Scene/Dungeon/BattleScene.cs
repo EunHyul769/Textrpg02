@@ -23,30 +23,33 @@ namespace TextRPG.FSM.Scene.Dungeon
             int groupEnd = groupStart + 2;
 
             List<int> availableKeys = new List<int>();
-
-            // 등록된 몬스터 중에서 해당 구간(3개)만 추가
             for (int i = groupStart; i <= groupEnd; i++)
             {
                 if (MonsterDB.Monsters.ContainsKey(i))
                     availableKeys.Add(i);
             }
 
-            // 예비용: 해당 구간 몬스터가 없으면 전체에서 랜덤
+            // 예비용: 구간 몬스터가 없으면 전체 허용
             if (availableKeys.Count == 0)
                 availableKeys.AddRange(MonsterDB.Monsters.Keys);
 
-            int count = Random.Next(1, 4); // 일반 몬스터 개수 (1~3마리)
+            // 🧩 보스 여부 체크
+            bool isBossFloor = (floor % 3 == 0);
 
-            // 🧩 일반 몬스터 생성
-            for (int i = 0; i < count; i++)
+            // 🧩 보스층이면 일반 몬스터 생략
+            if (!isBossFloor)
             {
-                int randKey = availableKeys[Random.Next(availableKeys.Count)];
-                Monster newMonster = MonsterDB.Monsters[randKey].Clone();
-                monsters.Add(newMonster);
+                int count = Random.Next(1, 4); // 일반 몬스터 개수 (1~3마리)
+                for (int i = 0; i < count; i++)
+                {
+                    int randKey = availableKeys[Random.Next(availableKeys.Count)];
+                    Monster newMonster = MonsterDB.Monsters[randKey].Clone();
+                    monsters.Add(newMonster);
+                }
             }
 
-            // 🧩 3층마다 100단위 보스 추가
-            if (floor % 3 == 0)
+            // 🧩 3층마다 100단위 보스 생성
+            if (isBossFloor)
             {
                 int bossKey = (floor / 3) * 100; // 3층→100, 6층→200, 9층→300 ...
 
@@ -56,7 +59,7 @@ namespace TextRPG.FSM.Scene.Dungeon
                     monsters.Add(boss);
 
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"\n보스 '{boss.Name}' 이(가) 전투에 등장했습니다!");
+                    Console.WriteLine($"\n[보스 등장!] {boss.Name} 이(가) 나타났다!");
                     Console.ResetColor();
                 }
                 else
@@ -71,7 +74,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             GameManager.Instance.MonsterList = monsters;
 
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            Console.WriteLine(isBossFloor ? "=== Boss Battle ===\n" : "Battle!!\n");
 
             foreach (var monster in monsters)
                 Console.WriteLine($"Lv.{monster.Id} {monster.Name}  HP {monster.Hp}");
