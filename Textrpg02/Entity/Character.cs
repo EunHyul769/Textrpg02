@@ -190,7 +190,7 @@ namespace TextRPG.Entity
         {
             while (Exp >= MaxExp)
             {
-                AddExp(-MaxExp);
+                Exp -= MaxExp;
                 LevelUp();
             }
         }
@@ -234,6 +234,7 @@ namespace TextRPG.Entity
             Console.WriteLine($"레벨이 {Level}로 상승했습니다.");
             Console.WriteLine($"Hp가 회복됩니다.\n");
 
+            var jobSkillDB = GameData.Instance.JobSkillDB;
             if (JobSkillDB.JobSkillTable.TryGetValue(Job, out var levelMap)
             && levelMap.TryGetValue(Level, out var skillList))
             {

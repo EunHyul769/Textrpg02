@@ -19,7 +19,7 @@ namespace TextRPG.Data.DB
 
         private void LoadJobSkillTable()
         {
-            string path = Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data\DB\job_skill_table.json");
+            string path = Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data\Json\job_skill_table.json");
             if (!File.Exists(path))
             {
                 Console.WriteLine($"{path} 파일을 찾을 수 없습니다.");
@@ -39,7 +39,7 @@ namespace TextRPG.Data.DB
 
             foreach (var (jobStr, levelMap) in raw)
             {
-                if (!System.Enum.TryParse(jobStr, out JobType job))
+                if (!System.Enum.TryParse(jobStr, true, out JobType job))
                     continue;
                 //Enum.TryParse 은 기본 제공 기능인데, enum이 따로 정의되어있어서 system붙여야함
 

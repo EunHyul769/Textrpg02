@@ -38,6 +38,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
             Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
+            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
@@ -157,6 +158,7 @@ namespace TextRPG.FSM.Scene.Dungeon
         private void ShowSkillSelect()
         {
             Console.Clear();
+            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");    //미리 남은 mp 보여주기
             Console.WriteLine("[스킬 선택]\n");
 
             // 스킬x

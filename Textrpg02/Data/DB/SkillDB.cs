@@ -14,7 +14,7 @@ namespace TextRPG.Data.DB
 
         private void LoadSkillsFromJson()
         {
-            string path = Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data\skills.json");
+            string path = Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data\Json\skills.json");
 
             if (!File.Exists(path))
             {
