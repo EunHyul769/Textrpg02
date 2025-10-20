@@ -1,7 +1,8 @@
-﻿using TextRPG.Entity;
-using TextRPG.Calculator;
+﻿using TextRPG.Calculator;
 using TextRPG.Data.DB;
+using TextRPG.Entity;
 using TextRPG.SkillSystem;
+using TextRPG.Utils;
 
 namespace TextRPG.FSM.Scene.Dungeon
 {
@@ -36,9 +37,9 @@ namespace TextRPG.FSM.Scene.Dungeon
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
-            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");
+            Logger.Log($"Lv.{player.Level} {player.Name} ({player.Job})", ConsoleColor.DarkMagenta);
+            Logger.Log($"HP {player.Hp}/{player.MaxHp}", ConsoleColor.Red);
+            Logger.Log($"MP {player.Mp}/{player.MaxMp}", ConsoleColor.Blue);
             Console.WriteLine();
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
@@ -88,9 +89,9 @@ namespace TextRPG.FSM.Scene.Dungeon
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
-            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");
+            Logger.Log($"Lv.{player.Level} {player.Name} ({player.Job})", ConsoleColor.DarkMagenta);
+            Logger.Log($"HP {player.Hp}/{player.MaxHp}", ConsoleColor.Red);
+            Logger.Log($"MP {player.Mp}/{player.MaxMp}", ConsoleColor.Blue);
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.Write("\n대상을 선택해주세요.\n>> ");
