@@ -233,6 +233,7 @@ namespace TextRPG.Entity
             Console.WriteLine($"레벨 업!");
             Console.WriteLine($"레벨이 {Level}로 상승했습니다.");
             Console.WriteLine($"Hp가 회복됩니다.\n");
+            Console.WriteLine($"Mp가 회복됩니다.\n");
 
             var jobSkillDB = GameData.Instance.JobSkillDB;
             if (JobSkillDB.JobSkillTable.TryGetValue(Job, out var levelMap)
