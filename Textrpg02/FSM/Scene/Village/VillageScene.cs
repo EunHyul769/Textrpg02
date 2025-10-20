@@ -15,24 +15,25 @@ namespace TextRPG.FSM.Scene.Village
 
         protected override void SetScene()
         {
-            Console.Title = "마을";
+            Console.Title = "영웅의 시련";
+            Console.ReadLine();
             character = GameManager.Instance.Character;
             inventory = GameManager.Instance.Character.Inventory;
         }
 
         protected override void View()
         {
-            Console.WriteLine("[마을]");
-            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
-            Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.\n");
+            Console.WriteLine("[영웅의 마을, 아테네]");
+            Console.WriteLine("오늘도 영웅을 꿈꾸는 젊은이가 왔군.");
+            Console.WriteLine("준비를 게을리하면 목숨을 잃기 쉽상이네. 귀한 목숨을 허투루 하지 말게나.\n");
             Console.WriteLine("1. 상태 보기");
             Console.WriteLine("2. 인벤토리");
-            Console.WriteLine("3. 랜덤 모험(스테미나 10 소요)");
-            Console.WriteLine("4. 마을 순찰(스테미나 5 소요)");
-            Console.WriteLine("5. 훈련하기(스테미나 15 소요)");
+            Console.WriteLine("3. 랜덤 모험(-스테미나 10)");
+            Console.WriteLine("4. 마을 순찰(-스테미나 5)");
+            Console.WriteLine("5. 훈련하기(-스테미나 15)");
             Console.WriteLine("6. 상점");
-            Console.WriteLine("7. 던전 입장");
-            Console.WriteLine("8. 휴식하기(500 G 소요)");
+            Console.WriteLine("7. 시련의 탑 입장");
+            Console.WriteLine("8. 휴식하기(-500 G)");
             Console.WriteLine("9. 저장 및 게임 종료");
             Console.WriteLine("10. 데이터 불러오기\n");
         }

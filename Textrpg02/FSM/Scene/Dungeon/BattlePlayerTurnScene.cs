@@ -90,6 +90,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
             Console.WriteLine($"HP {player.Hp}/{player.MaxHp}");
+            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");
             Console.WriteLine();
             Console.WriteLine("0. 취소");
             Console.Write("\n대상을 선택해주세요.\n>> ");
@@ -158,7 +159,9 @@ namespace TextRPG.FSM.Scene.Dungeon
         private void ShowSkillSelect()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"MP {player.Mp}/{player.MaxMp}");    //미리 남은 mp 보여주기
+            Console.ResetColor();
             Console.WriteLine("[스킬 선택]\n");
 
             // 스킬x

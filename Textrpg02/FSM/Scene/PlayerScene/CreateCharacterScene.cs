@@ -20,13 +20,13 @@ namespace TextRPG.FSM.Scene.PlayerScene
 
         protected override void View()
         {
-            Console.WriteLine("캐릭터의 이름을 입력해주세요.");
+            Console.WriteLine("자네의 이름은 무엇인가?");
             string? name = Console.ReadLine();
             Console.Clear();
 
             if (!string.IsNullOrWhiteSpace(name))
             {
-                Console.WriteLine($"반갑습니다 {name}님, TextRPG에 오신 것을 환영합니다!\n");
+                Console.WriteLine($"{name}, 위대한 영웅을 꿈꾸는 자여! 그대 앞에 신의 가호가 있으리! \n");
 
                 Console.WriteLine("[직업 선택]\n");
 

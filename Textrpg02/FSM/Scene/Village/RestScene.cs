@@ -59,7 +59,7 @@ namespace TextRPG.FSM.Scene.Village
                         ReturnToVillage();
 
                         QuestManager.Instance.questCount++;
-                        if (QuestManager.Instance.questCount == 10) //10번 휴식시 퀘스트 완료 메세지 나오도록.
+                        if (QuestManager.Instance.questCount == 5) //5번 휴식시 퀘스트 완료 메세지 나오도록.
                         {
                             Thread.Sleep(500);
                             Console.WriteLine("...zzz...");

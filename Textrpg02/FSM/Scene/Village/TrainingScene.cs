@@ -27,6 +27,7 @@ namespace TextRPG.FSM.Scene
                 {
                     character.AddExp(60);
                     Console.WriteLine("훈련이 잘 되었습니다!");
+                    Console.WriteLine("[현재 상태]");
                     Console.WriteLine($"Lv.: {character.Level}");
                     Console.WriteLine($"Exp: {character.Exp}");
                 }
@@ -34,6 +35,7 @@ namespace TextRPG.FSM.Scene
                 {
                     character.AddExp(40);
                     Console.WriteLine("오늘하루 열심히 훈련했습니다.");
+                    Console.WriteLine("[현재 상태]");
                     Console.WriteLine($"Lv.: {character.Level}");
                     Console.WriteLine($"Exp: {character.Exp}");
                 }
@@ -41,6 +43,7 @@ namespace TextRPG.FSM.Scene
                 {
                     character.AddExp(30);
                     Console.WriteLine("하기 싫다... 훈련이...");
+                    Console.WriteLine("[현재 상태]");
                     Console.WriteLine($"Lv.: {character.Level}");
                     Console.WriteLine($"Exp: {character.Exp}");
                 }
