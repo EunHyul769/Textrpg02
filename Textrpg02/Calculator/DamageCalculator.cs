@@ -77,6 +77,9 @@ namespace TextRPG.Calculator
                         target.TakeHp((int)Math.Round(final));
                         Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (플레이어 HP: {target.Hp})", ConsoleColor.Red);
                     }
+
+                    // 💡 히트 간 딜레이 추가
+                    System.Threading.Thread.Sleep(300);
                 }
             }
 
@@ -144,6 +147,9 @@ namespace TextRPG.Calculator
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ForegroundColor = prev;
+
+            // 💡 즉시 출력(버퍼 비우기)
+            Console.Out.Flush();
         }
 
         // 🧩 이름 추출
