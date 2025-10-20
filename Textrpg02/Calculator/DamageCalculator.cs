@@ -65,34 +65,42 @@ namespace TextRPG.Calculator
                 {
                     double def = GetDefenseValue(defender, skill);
                     double final = ApplyDefense(hit, def);
+                    int damageInt = (int)Math.Round(final);
 
                     if (defender is Monster m)
                     {
-                        m.Hp -= (int)Math.Round(final);
-                        if (m.Hp < 0) m.Hp = 0;
-                        Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (몬스터 HP: {m.Hp})", ConsoleColor.Magenta);
+                        // 💬 로그는 HP 감소 전 기준으로, 감소 후 예상값 출력
+                        int expectedHp = Math.Max(0, m.Hp - damageInt);
+                        Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (몬스터 HP: {expectedHp})", ConsoleColor.Magenta);
+
+                        // 💥 실제 HP 감소
+                        m.Hp = expectedHp;
                     }
                     else if (defender is Character target)
                     {
-                        target.TakeHp((int)Math.Round(final));
-                        Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (플레이어 HP: {target.Hp})", ConsoleColor.Red);
+                        int expectedHp = Math.Max(0, target.Hp - damageInt);
+                        Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (플레이어 HP: {expectedHp})", ConsoleColor.Red);
+
+                        target.TakeHp(damageInt);
                     }
 
-                    // 💡 히트 간 딜레이 추가
+                    // 🎬 히트 간 템포 (0.3초)
                     System.Threading.Thread.Sleep(300);
                 }
             }
-
             else if (attacker is Monster mon)
             {
                 double baseDamage = mon.Atk * (skill.Power + skill.SPower);
                 double def = GetDefenseValue(defender, skill);
                 double final = ApplyDefense(baseDamage, def);
+                int damageInt = (int)Math.Round(final);
 
                 if (defender is Character target)
                 {
-                    target.TakeHp((int)Math.Round(final));
-                    Log($"{mon.Name}이(가) {skill.Name}을(를) 사용했다! ▶ {final:F0} (플레이어 HP: {target.Hp})", ConsoleColor.Red);
+                    int expectedHp = Math.Max(0, target.Hp - damageInt);
+                    Log($"{mon.Name}이(가) {skill.Name}을(를) 사용했다! ▶ {final:F0} (플레이어 HP: {expectedHp})", ConsoleColor.Red);
+
+                    target.TakeHp(damageInt);
                 }
             }
         }
