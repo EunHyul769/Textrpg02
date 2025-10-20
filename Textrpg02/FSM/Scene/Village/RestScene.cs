@@ -69,7 +69,7 @@ namespace TextRPG.FSM.Scene.Village
                             Console.WriteLine("...zzz...");
                             Thread.Sleep(1000);
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.WriteLine("[히든 퀘스트 성공!]");
+                            Console.WriteLine("\n[히든 퀘스트 성공!]");
                             Thread.Sleep(500);
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
                             Console.WriteLine($"당신은 {QuestManager.Instance.questCount}번의 휴식을 취하였습니다.");
