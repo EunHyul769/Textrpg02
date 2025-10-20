@@ -266,11 +266,7 @@ namespace TextRPG.FSM.Scene.Dungeon
             target.Hp -= damage;
             if (target.Hp < 0) target.Hp = 0;
 
-            Console.Clear();
-            Console.WriteLine($"{player.Name} ▶ {skill.Name}!");
-            Console.WriteLine($"{target.Name}에게 {damage} 데미지!");
-            Console.WriteLine($"HP {prevHp} → {target.Hp}");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
 
             if (monsters.TrueForAll(monster => monster.Hp <= 0))
             {

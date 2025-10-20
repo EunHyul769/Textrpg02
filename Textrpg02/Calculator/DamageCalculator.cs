@@ -33,7 +33,7 @@ namespace TextRPG.Calculator
         }
 
 
-        // ⚔기본 공격
+        // 기본 공격
         private static double CalculateBasicAttack(object attacker, object defender)
         {
             if (attacker is Character c)
@@ -69,14 +69,15 @@ namespace TextRPG.Calculator
 
                     if (defender is Monster m)
                     {
-                        // 로그는 HP 감소 전 기준으로, 감소 후 예상값 출력
-                        int expectedHp = Math.Max(0, m.Hp - damageInt);
-                        Log($"{c.Name}의 {skill.Name} - {final:F0} 데미지! (몬스터 HP: {expectedHp})", ConsoleColor.Magenta);
+                        int beforeHp = m.Hp; // 감소 전 HP
+                        int afterHp = Math.Max(0, m.Hp - damageInt); // 감소 후 HP
+
+                        Log($"{c.Name}의 {skill.Name} - {final:F0} 피해!", ConsoleColor.Red);
+                        Log($"몬스터의 HP {beforeHp} → {afterHp}", ConsoleColor.Red);
 
                         Thread.Sleep(400);
 
-                        // 실제 HP 감소
-                        m.Hp = expectedHp;
+                        m.Hp = afterHp; // 실제 HP 적용
                     }
                     else if (defender is Character target)
                     {
@@ -137,7 +138,7 @@ namespace TextRPG.Calculator
         {
             if (rng.NextDouble() < c.CritChance)
             {
-                Log("★ 크리티컬 히트! ★", ConsoleColor.Yellow);
+                Log("크리티컬 히트!", ConsoleColor.Yellow);
                 return baseDamage * c.CritMultiplier;
             }
 

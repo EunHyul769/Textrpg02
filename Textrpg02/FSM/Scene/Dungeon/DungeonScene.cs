@@ -8,15 +8,15 @@
 
         protected override void SetScene()
         {
-            Console.Title = "던전 입장";
+            Console.Title = "시련의 탑 입장";
         }
 
         protected override void View()
         {
             floorNum = GameManager.Instance.CurrentFloors; //현재 층수
-            Console.WriteLine("[던전 입장]\n");
+            Console.WriteLine("[시련의 탑 입장]\n");
             Console.WriteLine("0. 마을로 귀환");
-            Console.WriteLine($"1. 던전으로 진입 ({floorNum}층)\n");
+            Console.WriteLine($"1. 시련의 탑으로 진입 ({floorNum}층)\n");
         }
 
         protected override void Control()
@@ -38,7 +38,7 @@
                     Console.WriteLine("...터벅...");
                     Sleep();
 
-                    // 🔹 보스 씬 대신 일반 전투 씬으로만 이동
+                    // 보스 씬 대신 일반 전투 씬으로만 이동
                     controller.ChangeSceneState(controller.BattleScene);
                     break;
 
