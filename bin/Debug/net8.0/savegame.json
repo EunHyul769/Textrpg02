@@ -1,0 +1,28 @@
+{
+  "$type": "TextRPG.Data.GameSaveData, TextRPG",
+  "CharacterData": {
+    "$type": "TextRPG.Data.CharacterData, TextRPG",
+    "name": "da",
+    "maxHp": 80,
+    "hp": 80,
+    "maxMp": 40,
+    "mp": 40,
+    "attack": 8,
+    "skillAttack": 5,
+    "armor": 8,
+    "magicResistance": 8,
+    "job": 1,
+    "level": 1,
+    "gold": 5000,
+    "maxExp": 100,
+    "exp": 0,
+    "stamina": 100,
+    "learnedSkills": []
+  },
+  "InventoryData": {
+    "$type": "TextRPG.Data.InventoryData, TextRPG",
+    "items": [],
+    "equipItemCount": 0,
+    "consumeItemCount": 0
+  }
+}
